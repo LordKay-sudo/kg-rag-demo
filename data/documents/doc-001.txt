@@ -1,0 +1,3 @@
+Title: BRCA1 and breast cancer risk
+
+BRCA1 mutations substantially increase susceptibility to breast cancer. Studies show that BRCA1 participates in DNA double-strand break repair. Patients with pathogenic BRCA1 variants often develop breast cancer at younger ages. Olaparib has been investigated as a targeted therapy in BRCA1-associated breast cancer.

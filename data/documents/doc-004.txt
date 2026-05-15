@@ -1,0 +1,3 @@
+Title: EGFR targeting in lung cancer
+
+EGFR overexpression and activating mutations drive a subset of lung cancer cases. Erlotinib and gefitinib are EGFR tyrosine kinase inhibitors used in non-small cell lung cancer. Resistance often emerges via secondary EGFR mutations.

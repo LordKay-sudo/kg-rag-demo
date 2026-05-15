@@ -1,0 +1,3 @@
+Title: CFTR and cystic fibrosis
+
+CFTR encodes a chloride channel critical for airway surface liquid homeostasis. Loss-of-function CFTR mutations cause cystic fibrosis. Ivacaftor and tezacaftor modulators improve CFTR function in eligible genotypes.

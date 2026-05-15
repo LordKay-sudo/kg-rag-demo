@@ -1,0 +1,3 @@
+Title: BRAF mutations in melanoma
+
+BRAF V600E is a hallmark mutation in melanoma. Vemurafenib and dabrafenib inhibit mutant BRAF kinase activity. Combination with MEK inhibitors such as trametinib improves response duration in BRAF-mutant melanoma.
