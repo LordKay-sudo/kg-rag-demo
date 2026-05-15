@@ -1,0 +1,107 @@
+:root {
+  --bg: #0a0f1a;
+  --surface: #111827;
+  --border: #2d3a52;
+  --text: #e8edf5;
+  --muted: #94a3b8;
+  --accent: #a78bfa;
+  --accent-dim: #8b5cf6;
+  --gene: #34d399;
+  --disease: #f472b6;
+  --drug: #38bdf8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+a { color: var(--accent); }
+
+.app-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.app-header {
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface), var(--bg));
+  padding: 1rem 1.5rem;
+}
+.app-header-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+}
+.brand { display: flex; gap: 0.75rem; align-items: center; color: inherit; text-decoration: none; }
+.brand:hover { text-decoration: none; }
+.brand-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--drug));
+  display: grid; place-items: center; font-weight: 700; color: #0a0f1a; font-size: 0.8rem;
+}
+.brand h1 { margin: 0; font-size: 1.1rem; }
+.brand p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.nav-links { display: flex; gap: 1.25rem; }
+.nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+.nav-links a.active, .nav-links a:hover { color: var(--accent); }
+.app-main { flex: 1; max-width: 960px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem; }
+.app-footer {
+  border-top: 1px solid var(--border); padding: 1rem; text-align: center;
+  font-size: 0.85rem; color: var(--muted);
+}
+
+.page-title { margin: 0 0 0.35rem; font-size: 1.75rem; }
+.page-subtitle { margin: 0 0 1.5rem; color: var(--muted); }
+
+.ask-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.25rem;
+}
+.ask-input {
+  width: 100%; min-height: 88px; padding: 0.85rem 1rem;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); font-family: inherit; font-size: 1rem;
+  resize: vertical;
+}
+.ask-input:focus { outline: none; border-color: var(--accent); }
+.ask-actions { margin-top: 0.75rem; display: flex; gap: 0.75rem; align-items: center; }
+.btn {
+  padding: 0.6rem 1.2rem; border-radius: 8px; border: none;
+  background: var(--accent-dim); color: #fff; font-weight: 600; cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.hint { font-size: 0.85rem; color: var(--muted); }
+
+.answer-box {
+  margin-top: 1.25rem; padding: 1rem; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg);
+}
+.answer-box h3 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--accent); }
+.citation {
+  margin-top: 0.75rem; padding: 0.75rem; border-left: 3px solid var(--accent-dim);
+  background: rgba(139, 92, 246, 0.08); font-size: 0.9rem;
+}
+.citation-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem; }
+.entity-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.tag {
+  font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;
+  background: rgba(167, 139, 250, 0.15); color: var(--accent);
+}
+
+.table-wrap {
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  background: var(--surface);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: #1a2438; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; }
+.status { font-size: 0.8rem; font-weight: 600; }
+.status-ingested { color: var(--gene); }
+.status-pending { color: var(--muted); }
+
+.about-section {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem;
+}
+.about-section h2 { margin: 0 0 0.5rem; font-size: 1.05rem; }
+.about-section p, .about-section li { color: var(--muted); margin: 0 0 0.5rem; }
+.error { color: #f87171; }

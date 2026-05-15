@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app/api \
+    HF_HOME=/app/.cache/huggingface
+
+RUN pip install --no-cache-dir neo4j sentence-transformers numpy pandas
+
+COPY api/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY api/app /app/api/app
+COPY scripts /app/scripts
+COPY data /app/data
+COPY prompts /app/prompts
+
+CMD ["/bin/sh", "-c", "python /app/scripts/seed_documents.py && python /app/scripts/ingest_all.py"]
