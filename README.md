@@ -23,12 +23,18 @@ KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: doc
 | Chunk embeddings (MiniLM) + vector search | ✅ |
 | `POST /ask` with Ollama or retrieval fallback | ✅ |
 | React Ask + Corpus + About UI | ✅ |
+| `GET /graph/explore` + force-directed graph UI | ✅ |
+| Corpus upload + per-document ingest from browser | ✅ |
 | Full Docker Compose stack | ✅ |
 | GitHub Actions CI | ✅ |
 
 **Corpus (MVP):** 10 synthetic biomedical-style abstracts in `data/documents/`. Suitable for demos; not clinical-grade.
 
 Pairs with [BioInsight Graph](https://github.com/LordKay-sudo/bioinsight-graph) (structured Open Targets–style associations).
+
+![KG RAG Ask UI](docs/screenshot-ask.png)
+
+![Graph explorer](docs/screenshot-graph.png)
 
 ---
 
@@ -144,8 +150,10 @@ Base path: `/api/v1`
 |--------|------|-------------|
 | GET | `/health` | API, Neo4j, LLM provider status |
 | GET | `/documents` | List ingested documents |
+| POST | `/documents` | Upload `.txt` / `.md` (multipart) |
 | POST | `/ingest/{document_id}` | Chunk, extract, embed one document |
-| POST | `/ask` | `{ "question": "..." }` → answer + citations + entities |
+| POST | `/ask` | `{ "question": "..." }` → answer + citations + entities + subgraph |
+| GET | `/graph/explore?entity_id=` | One-hop subgraph around an entity |
 
 Example `/ask` response:
 
@@ -205,8 +213,23 @@ kg-rag-demo/
 cd api && pytest -q
 
 # Web production build
-cd web && npm run build
+cd web && npm install && npm run build
+
+# README screenshots (API + web dev servers running, corpus ingested)
+node scripts/capture_screenshots.mjs
 ```
+
+### Roadmap
+
+| Phase | Deliverable | Status |
+|-------|-------------|--------|
+| 0 | Scaffold, Neo4j, Document/Chunk schema | ✅ |
+| 1 | Chunk + ingest API + list documents | ✅ |
+| 2 | Rule-based extractor → MENTIONS edges | ✅ |
+| 3 | Embeddings + vector search | ✅ |
+| 4 | RAG `/ask` with Ollama or fallback | ✅ |
+| 5 | React Ask UI + citation panels | ✅ |
+| 6 | Graph explorer + Docker + README screenshots | ✅ |
 
 ---
 

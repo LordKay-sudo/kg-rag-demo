@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.db import close_driver
-from app.routers import ask, documents, health
+from app.routers import ask, documents, graph, health
 
 API_PREFIX = "/api/v1"
 
@@ -34,6 +34,7 @@ app.add_middleware(
 app.include_router(health.router, prefix=API_PREFIX)
 app.include_router(documents.router, prefix=API_PREFIX)
 app.include_router(ask.router, prefix=API_PREFIX)
+app.include_router(graph.router, prefix=API_PREFIX)
 
 
 @app.get("/")

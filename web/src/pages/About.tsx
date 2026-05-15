@@ -35,7 +35,7 @@ export default function About() {
           <li>Synthetic corpus only — not clinical-grade</li>
           <li>Rule-based extraction; no fine-tuned NER</li>
           <li>LLM answers require Ollama locally (falls back to retrieval-only summary)</li>
-          <li>No upload UI — ingest via API or seed scripts</li>
+          <li>Upload + ingest via Corpus UI or API; graph explorer for 1-hop neighborhoods</li>
         </ul>
       </section>
 

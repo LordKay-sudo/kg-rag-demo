@@ -42,3 +42,27 @@ class IngestResponse(BaseModel):
     document_id: str
     chunks: int
     status: str
+
+
+class SubgraphNode(BaseModel):
+    id: str
+    label: str
+    name: str | None = None
+
+
+class SubgraphLink(BaseModel):
+    source: str
+    target: str
+    type: str
+
+
+class ExploreResponse(BaseModel):
+    entity_id: str
+    nodes: list[SubgraphNode]
+    links: list[SubgraphLink]
+
+
+class UploadResponse(BaseModel):
+    document_id: str
+    title: str
+    status: str

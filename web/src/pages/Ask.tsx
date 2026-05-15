@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { api, type AskResponse } from "../api/client";
+import { Link } from "react-router-dom";
+import ForceGraphView from "../components/ForceGraphView";
+import { api, subgraphFromAsk, type AskResponse } from "../api/client";
 
 const EXAMPLES = [
   "What is the link between BRCA1 and breast cancer?",
@@ -28,6 +30,8 @@ export default function Ask() {
     }
   };
 
+  const inlineGraph = result ? subgraphFromAsk(result) : null;
+
   return (
     <>
       <h2 className="page-title">Ask the knowledge graph</h2>
@@ -54,7 +58,12 @@ export default function Ask() {
               key={ex}
               type="button"
               className="btn"
-              style={{ background: "transparent", border: "1px solid var(--border)", color: "var(--muted)", fontSize: "0.8rem" }}
+              style={{
+                background: "transparent",
+                border: "1px solid var(--border)",
+                color: "var(--muted)",
+                fontSize: "0.8rem",
+              }}
               onClick={() => {
                 setQuestion(ex);
                 submit(ex);
@@ -74,9 +83,13 @@ export default function Ask() {
             {result.entities.length > 0 && (
               <div className="entity-tags">
                 {result.entities.map((e) => (
-                  <span key={`${e.type}-${e.id}`} className="tag">
+                  <Link
+                    key={`${e.type}-${e.id}`}
+                    to={`/graph/${encodeURIComponent(e.id)}`}
+                    className="tag tag-link"
+                  >
                     {e.type}: {e.id}
-                  </span>
+                  </Link>
                 ))}
               </div>
             )}
@@ -93,6 +106,21 @@ export default function Ask() {
                   </div>
                 ))}
               </>
+            )}
+            {inlineGraph && inlineGraph.nodes.length > 0 && (
+              <section className="graph-section" style={{ marginTop: "1.25rem" }}>
+                <h3>Related subgraph</h3>
+                <ForceGraphView
+                  centerId={inlineGraph.entity_id}
+                  nodes={inlineGraph.nodes}
+                  links={inlineGraph.links}
+                />
+                <p className="hint" style={{ marginTop: "0.5rem" }}>
+                  <Link to={`/graph/${encodeURIComponent(inlineGraph.entity_id)}`}>
+                    Open full explorer →
+                  </Link>
+                </p>
+              </section>
             )}
           </div>
         )}

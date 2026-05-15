@@ -17,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Ask
             </NavLink>
             <NavLink to="/corpus">Corpus</NavLink>
+            <NavLink to="/graph/BRCA1">Graph</NavLink>
             <NavLink to="/about">About</NavLink>
           </nav>
         </div>

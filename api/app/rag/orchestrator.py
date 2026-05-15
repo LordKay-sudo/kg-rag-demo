@@ -64,7 +64,8 @@ def _subgraph(entities: list[dict]) -> dict:
             """
             UNWIND $ids AS eid
             MATCH (n) WHERE n.id = eid
-            RETURN DISTINCT labels(n)[0] AS label, n.id AS id
+            RETURN DISTINCT labels(n)[0] AS label, n.id AS id,
+                   coalesce(n.symbol, n.name, n.title, n.id) AS name
             """,
             ids=ids,
         ).data()
@@ -78,7 +79,10 @@ def _subgraph(entities: list[dict]) -> dict:
             """,
             ids=ids,
         ).data()
-    return {"nodes": nodes, "edges": edges}
+    return {
+        "nodes": [{"label": n["label"], "id": n["id"], "name": n.get("name")} for n in nodes],
+        "edges": edges,
+    }
 
 
 def ask(question: str) -> dict:
