@@ -11,7 +11,13 @@ Optional third repo — enable only when demonstrating **structured + unstructur
 
 ## Positioning
 
-**Unstructured** biomedical text → chunks → entities → vectors → **cited** answers. Complements BioInsight’s **curated graph**, not replaces it. PRoH-inspired refinement here = **plan-aware retrieval** (use graph gaps to steer queries) and **shared identifiers** — not building a knowledge hypergraph engine.
+**Unstructured** biomedical text → chunks → entities → vectors → **cited** answers. Complements BioInsight’s **curated graph**, not replaces it.
+
+Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.org/html/2603.25152v3), [ML6 biomedical KG](https://blog.ml6.eu/accelerating-biomedical-knowledge-graph-construction-with-llms-db429952f4b2), [production ontology GraphRAG](https://medium.com/@aiwithakashgoyal/beyond-simple-extraction-how-production-grade-ontologies-transform-graphrag-from-prototype-to-333742fa41a6)):
+
+- **Ontology-guided extraction** — constrain LLM/rule extract to allowed types (Gene, Disease, Drug, `ASSOCIATED_WITH`, etc.)
+- **Normalize after extract** — merge synonyms/duplicates before Neo4j write (ML6 uniformisation agent pattern)
+- **Plan-aware + dual-channel** with BioInsight — graph dossier first, literature second (see embabel **M8**)
 
 ---
 
@@ -46,6 +52,8 @@ Optional third repo — enable only when demonstrating **structured + unstructur
 | **R6** | **`POST /ask` optional `gene_id` / `disease_id`** — bias retrieval toward graph-aligned entities | R5 | OpenAPI documented |
 | **R7** | Extraction **provenance**: chunk id, extractor version, confidence on entities | — | Visible in graph explore or API |
 | **R8** | Notebook: BRCA1 — BioInsight scores + kg-rag quotes side by side | BioInsight 4.4 | Single narrative demo |
+| **R16** | `docs/EXTRACTION_SCHEMA.md` — schema **S=(E,R,Φ)**: allowed entities, relations, domain/range rules | — | Extractor/prompt references schema |
+| **R17** | **Normalization pipeline** after extract: dedupe symbols, map aliases before graph write | R16 | Documented step in ingest README |
 
 ---
 
@@ -84,18 +92,27 @@ Optional third repo — enable only when demonstrating **structured + unstructur
 
 - Replacing BioInsight structured ingest
 - Clinical decision support
-- Full PRoH hypergraph replication
-- Separate Neo4j instance required for production BioInsight (ports 7475/7688 stay isolated by design)
+- Full PRoH / UniAI-GraphRAG codebase import
+- Microsoft GraphRAG **community report** pipeline on 10-doc demo corpus
+- LangChain as required core dependency
+- PubMed-scale LLM KG (MedKGent-scale) without confidence filtering and licences
+
+## References (optional reading)
+
+- [Towards AI — Neo4j + LangChain GraphRAG](https://pub.towardsai.net/graphrag-explained-building-knowledge-grounded-llm-systems-with-neo4j-and-langchain-017a1820763e)  
+- [Neo4j field — PubMed KG generation](https://github.com/neo4j-field/pubmed-knowledge-graph-generation) — extract + resolve + Cypher agent patterns  
+- [DeepSense — ontology-driven GraphRAG](https://deepsense.ai/resource/ontology-driven-knowledge-graph-for-graphrag/)
 
 ---
 
 ## Task pick order
 
 1. **R1 → R4** (citations + trust)  
-2. **R5 → R6** (IDs — after BioInsight 2.x)  
-3. **R8** (demo notebook)  
-4. **R9 → R11** (plan-aware)  
-5. **R13+** if time
+2. **R16 → R17** (schema + normalization — before scaling corpus)  
+3. **R5 → R6** (IDs — after BioInsight 2.x)  
+4. **R8** (demo notebook)  
+5. **R9 → R11** (plan-aware)  
+6. **R13+** if time
 
 ---
 
