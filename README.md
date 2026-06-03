@@ -30,7 +30,7 @@ KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: doc
 
 **Corpus (MVP):** 10 synthetic biomedical-style abstracts in `data/documents/`. Suitable for demos; not clinical-grade.
 
-Pairs with [BioInsight Graph](https://github.com/LordKay-sudo/bioinsight-graph) (structured Open Targets–style associations).
+Pairs with [BioInsight Graph](https://github.com/LordKay-sudo/bioinsight-graph) (structured Open Targets–style associations). Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Ecosystem handoff: [ECOSYSTEM_CONTEXT](https://github.com/LordKay-sudo/bioinsight-graph/blob/main/docs/ECOSYSTEM_CONTEXT.md).
 
 ![KG RAG Ask UI](docs/screenshot-ask.png)
 
@@ -237,8 +237,9 @@ node scripts/capture_screenshots.mjs
 
 | Project | Focus |
 |---------|--------|
-| [bioinsight-graph](https://github.com/LordKay-sudo/bioinsight-graph) | Structured public datasets → graph → explore |
-| **kg-rag-demo** | Unstructured text → graph + embeddings → Q&A |
+| [bioinsight-graph](https://github.com/LordKay-sudo/bioinsight-graph) | Structured public datasets → graph → explore · [ROADMAP](https://github.com/LordKay-sudo/bioinsight-graph/blob/main/docs/ROADMAP.md) |
+| [embabel-mcp](https://github.com/LordKay-sudo/embabel-mcp) | MCP on BioInsight API · [ROADMAP](https://github.com/LordKay-sudo/embabel-mcp/blob/main/docs/ROADMAP.md) |
+| **kg-rag-demo** | Unstructured text → graph + embeddings → Q&A · [ROADMAP](docs/ROADMAP.md) |
 
 ---
 
