@@ -43,6 +43,8 @@ class EntityRef(BaseModel):
     type: str
     id: str
     ontology_id: str | None = None
+    confidence: float | None = None
+    extractor_version: str | None = None
 
 
 class AskResponse(BaseModel):

@@ -3,6 +3,14 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+# Bump when extraction rules change so provenance on MENTIONS edges is auditable (R7).
+EXTRACTOR_VERSION = "rule-v1"
+
+# Rule-based confidence per entity kind (allowlist matches are the most reliable).
+GENE_CONFIDENCE = 0.9
+DISEASE_CONFIDENCE = 0.85
+DRUG_CONFIDENCE = 0.8
+
 GENE_PATTERN = re.compile(r"\b([A-Z][A-Z0-9]{1,9})\b")
 
 DISEASE_PHRASES = {
@@ -40,6 +48,7 @@ class ExtractedEntity:
     type: str
     id: str
     mention: str
+    confidence: float = 1.0
 
 
 @dataclass
@@ -62,7 +71,9 @@ def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRe
             key = ("Gene", symbol)
             if key not in seen:
                 seen.add(key)
-                entities.append(ExtractedEntity(type="Gene", id=symbol, mention=symbol))
+                entities.append(
+                    ExtractedEntity(type="Gene", id=symbol, mention=symbol, confidence=GENE_CONFIDENCE)
+                )
 
     lower = text.lower()
     for phrase, disease_id in DISEASE_PHRASES.items():
@@ -70,14 +81,20 @@ def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRe
             key = ("Disease", disease_id)
             if key not in seen:
                 seen.add(key)
-                entities.append(ExtractedEntity(type="Disease", id=disease_id, mention=phrase))
+                entities.append(
+                    ExtractedEntity(
+                        type="Disease", id=disease_id, mention=phrase, confidence=DISEASE_CONFIDENCE
+                    )
+                )
 
     for drug_name, drug_id in DRUG_NAMES.items():
         if drug_name in lower:
             key = ("Drug", drug_id)
             if key not in seen:
                 seen.add(key)
-                entities.append(ExtractedEntity(type="Drug", id=drug_id, mention=drug_name))
+                entities.append(
+                    ExtractedEntity(type="Drug", id=drug_id, mention=drug_name, confidence=DRUG_CONFIDENCE)
+                )
 
     relations: list[ExtractedRelation] = []
     genes = [e for e in entities if e.type == "Gene"]

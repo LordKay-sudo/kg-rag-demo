@@ -50,8 +50,8 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 |----|------|------------|-----------|
 | ✓ **R5** | Entity resolution: extracted genes → **ENSG**, diseases → **EFO/MONDO** (lookup table or API) | BioInsight 2.x | `app/identifiers.py`; `ontology_id` on Gene/Disease nodes |
 | ✓ **R6** | **`POST /ask` optional `gene_id` / `disease_id`** — bias retrieval toward graph-aligned entities | R5 | Params in OpenAPI; biased chunk boost |
-| **R7** | Extraction **provenance**: chunk id, extractor version, confidence on entities | — | Visible in graph explore or API |
-| **R8** | Notebook: BRCA1 — BioInsight scores + kg-rag quotes side by side | BioInsight 4.4 | Single narrative demo |
+| ✓ **R7** | Extraction **provenance**: chunk id, extractor version, confidence on entities | — | On `MENTIONS` edges; in `/documents/{id}/chunks` |
+| ✓ **R8** | Notebook: BRCA1 — BioInsight scores + kg-rag quotes side by side | BioInsight 4.4 | [notebooks/brca1_structured_vs_literature.ipynb](../notebooks/brca1_structured_vs_literature.ipynb) |
 | **R16** | `docs/EXTRACTION_SCHEMA.md` — schema **S=(E,R,Φ)**: allowed entities, relations, domain/range rules | — | Extractor/prompt references schema |
 | **R17** | **Normalization pipeline** after extract: dedupe symbols, map aliases before graph write | R16 | Documented step in ingest README |
 

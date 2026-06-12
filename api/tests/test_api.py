@@ -37,7 +37,13 @@ def test_document_chunks_audit_trail():
                     "index": 0,
                     "text": "BRCA1 increases breast cancer risk.",
                     "entities": [
-                        {"type": "Gene", "id": "BRCA1", "ontology_id": "ENSG00000012048"}
+                        {
+                            "type": "Gene",
+                            "id": "BRCA1",
+                            "ontology_id": "ENSG00000012048",
+                            "confidence": 0.9,
+                            "extractor_version": "rule-v1",
+                        }
                     ],
                 }
             ]
@@ -51,7 +57,10 @@ def test_document_chunks_audit_trail():
     assert body["document_id"] == "doc-001"
     assert body["chunk_count"] == 1
     assert body["reference_url"] == "https://europepmc.org/article/MED/20301425"
-    assert body["chunks"][0]["entities"][0]["ontology_id"] == "ENSG00000012048"
+    entity = body["chunks"][0]["entities"][0]
+    assert entity["ontology_id"] == "ENSG00000012048"
+    assert entity["confidence"] == 0.9
+    assert entity["extractor_version"] == "rule-v1"
 
 
 def test_document_chunks_not_found():

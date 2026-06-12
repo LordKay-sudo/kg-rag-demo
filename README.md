@@ -27,6 +27,8 @@ KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: doc
 | Citations with doc title + PMID/DOI/Europe PMC links | ✅ |
 | Shared ENSG/EFO/MONDO IDs with BioInsight | ✅ |
 | Entity-biased ask (`gene_id` / `disease_id`) | ✅ |
+| Chunk audit trail + extraction provenance (confidence, version) | ✅ |
+| BRCA1 structured-vs-literature notebook | ✅ |
 | React Ask + Corpus + About UI | ✅ |
 | `GET /graph/explore` + force-directed graph UI | ✅ |
 | Corpus upload + per-document ingest from browser | ✅ |
@@ -240,6 +242,7 @@ TOP_K_CHUNKS=5
 kg-rag-demo/
 ├── api/                 # FastAPI app, ingest, RAG
 ├── web/                 # React UI (Ask, Corpus, About)
+├── notebooks/           # BRCA1 structured-vs-literature walkthrough (R8)
 ├── scripts/             # seed_documents.py, ingest_all.py
 ├── data/documents/      # seed corpus (doc-001 … doc-010)
 ├── prompts/             # LLM prompt templates
@@ -274,6 +277,7 @@ node scripts/capture_screenshots.mjs
 | 5 | React Ask UI + citation panels | ✅ |
 | 6 | Graph explorer + Docker + README screenshots | ✅ |
 | 7 | Citations w/ PMID/DOI links (R1/R2) + shared ENSG/EFO ids & biased ask (R5/R6) | ✅ |
+| 8 | Chunk audit + disclaimer (R3/R4), extraction provenance (R7), BRCA1 notebook (R8) | ✅ |
 
 ---
 

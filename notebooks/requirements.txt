@@ -1,0 +1,2 @@
+# Install alongside api/requirements.txt (httpx, pandas already there).
+jupyter>=1.1.0

@@ -8,7 +8,7 @@ from app.db import get_session
 from app.identifiers import resolve_entity_id
 from app.ingest.chunker import chunk_text
 from app.ingest.embedder import embed_texts
-from app.ingest.extractor import extract_entities
+from app.ingest.extractor import EXTRACTOR_VERSION, extract_entities
 from app.ingest.metadata import parse_document
 
 
@@ -80,11 +80,15 @@ def ingest_document(document_id: str) -> dict:
                     SET e.ontology_id = coalesce($ontology_id, e.ontology_id)
                     WITH e
                     MATCH (c:Chunk {{id: $chunk_id}})
-                    MERGE (c)-[:MENTIONS]->(e)
+                    MERGE (c)-[m:MENTIONS]->(e)
+                    SET m.confidence = $confidence,
+                        m.extractor_version = $extractor_version
                     """,
                     id=ent.id,
                     ontology_id=ontology_id,
                     chunk_id=chunk_id,
+                    confidence=ent.confidence,
+                    extractor_version=EXTRACTOR_VERSION,
                 )
 
             for rel in relations:
