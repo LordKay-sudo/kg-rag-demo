@@ -1,3 +1,4 @@
 Title: Alzheimer disease genetics
+Source: Synthetic demo abstract (not a real publication)
 
 APOE epsilon4 allele is a major genetic risk factor for Alzheimer disease. APP and PSEN1 mutations cause early-onset familial Alzheimer disease. Amyloid-beta accumulation remains a central hypothesis in pathogenesis.

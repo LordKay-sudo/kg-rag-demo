@@ -1,3 +1,4 @@
 Title: PTEN loss in prostate cancer
+Source: Synthetic demo abstract (not a real publication)
 
 PTEN is a lipid phosphatase antagonizing PI3K signaling. PTEN deletion or inactivation occurs frequently in prostate cancer. PI3K pathway inhibitors are studied in PTEN-deficient tumors. Olaparib may be considered in DNA repair-deficient contexts.

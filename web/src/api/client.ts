@@ -1,13 +1,19 @@
 export interface Citation {
   chunk_id: string;
   document_id: string;
+  document_title?: string | null;
+  source?: string | null;
   snippet: string;
   score?: number | null;
+  pmid?: string | null;
+  doi?: string | null;
+  reference_url?: string | null;
 }
 
 export interface EntityRef {
   type: string;
   id: string;
+  ontology_id?: string | null;
 }
 
 export interface SubgraphNode {

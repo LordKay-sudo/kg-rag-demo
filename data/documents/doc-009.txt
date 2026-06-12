@@ -1,3 +1,4 @@
 Title: KRAS in colorectal and lung tumors
+Source: Synthetic demo abstract (not a real publication)
 
 KRAS activating mutations are common in colorectal cancer and lung carcinoma. KRAS was long considered undruggable until recent covalent inhibitors. Combination strategies aim to overcome adaptive resistance.

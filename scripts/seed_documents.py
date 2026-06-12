@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "api"))
 
 from app.config import settings  # noqa: E402
+from app.ingest.metadata import parse_document  # noqa: E402
 
 INIT = (ROOT / "scripts" / "neo4j" / "init.cypher").read_text(encoding="utf-8")
 DOCS_DIR = ROOT / "data" / "documents"
@@ -29,20 +30,26 @@ def main() -> None:
 
             for path in sorted(DOCS_DIR.glob("*.txt")):
                 doc_id = path.stem
-                title = path.read_text(encoding="utf-8").splitlines()[0].replace("Title: ", "")
+                meta = parse_document(path.read_text(encoding="utf-8"), fallback_title=doc_id)
                 session.run(
                     """
                     MERGE (d:Document {id: $id})
                     SET d.title = $title,
                         d.source = $source,
+                        d.pmid = $pmid,
+                        d.doi = $doi,
+                        d.url = $url,
                         d.ingested_at = null,
                         d.status = 'pending'
                     """,
                     id=doc_id,
-                    title=title,
-                    source=str(path.name),
+                    title=meta.title,
+                    source=meta.source or str(path.name),
+                    pmid=meta.pmid,
+                    doi=meta.doi,
+                    url=meta.url,
                 )
-                print(f"Registered {doc_id}: {title}")
+                print(f"Registered {doc_id}: {meta.title}")
 
         print(f"\nRegistered {len(list(DOCS_DIR.glob('*.txt')))} documents.")
         print("Ingest via: POST http://localhost:8000/api/v1/ingest/{document_id}")

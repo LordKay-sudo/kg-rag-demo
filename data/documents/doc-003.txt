@@ -1,3 +1,4 @@
 Title: TP53 in lung carcinoma
+Source: Synthetic demo abstract (not a real publication)
 
 TP53 is among the most frequently mutated genes in lung carcinoma. Mutant p53 disrupts cell cycle checkpoints and apoptosis. TP53 alterations correlate with poor prognosis in advanced lung carcinoma. Research continues on restoring wild-type p53 function.

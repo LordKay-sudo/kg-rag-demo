@@ -6,9 +6,14 @@ import httpx
 
 from app.config import settings
 from app.db import get_session
+from app.identifiers import resolve_disease_id, resolve_gene_id
 from app.rag.retriever import retrieve_chunks
+from app.references import resolve_reference_url
 
 CHUNK_CITE = re.compile(r"\[chunk:([^\]]+)\]")
+
+# Score boost applied to chunks that mention a caller-specified entity (R6).
+ENTITY_BIAS_BOOST = 0.15
 
 
 def _build_context(chunks) -> str:
@@ -48,11 +53,64 @@ def _entities_from_chunks(chunk_ids: list[str]) -> list[dict]:
             """
             UNWIND $chunk_ids AS cid
             MATCH (c:Chunk {id: cid})-[:MENTIONS]->(e)
-            RETURN DISTINCT labels(e)[0] AS type, e.id AS id
+            RETURN DISTINCT labels(e)[0] AS type, e.id AS id, e.ontology_id AS ontology_id
             """,
             chunk_ids=chunk_ids,
         ).data()
-    return [{"type": r["type"], "id": r["id"]} for r in rows]
+    return [
+        {"type": r["type"], "id": r["id"], "ontology_id": r.get("ontology_id")}
+        for r in rows
+    ]
+
+
+def _documents_meta(document_ids: list[str]) -> dict[str, dict]:
+    if not document_ids:
+        return {}
+    with get_session() as session:
+        rows = session.run(
+            """
+            UNWIND $ids AS did
+            MATCH (d:Document {id: did})
+            RETURN d.id AS id, d.title AS title, d.source AS source,
+                   d.pmid AS pmid, d.doi AS doi, d.url AS url
+            """,
+            ids=document_ids,
+        ).data()
+    return {r["id"]: r for r in rows}
+
+
+def _bias_chunk_ids(gene_id: str | None, disease_id: str | None) -> set[str]:
+    """Chunk ids that mention the caller-specified gene/disease (R6).
+
+    Accepts either the extractor id (symbol / slug) or the shared ontology id
+    (ENSG / EFO / MONDO); matches against both ``id`` and ``ontology_id``.
+    """
+    targets: list[str] = []
+    for raw in (gene_id, disease_id):
+        if not raw:
+            continue
+        targets.append(raw)
+        upper = raw.upper()
+        targets.append(upper)
+        # Map a bare symbol/slug to its ontology id and vice versa.
+        resolved = resolve_gene_id(raw) or resolve_disease_id(raw)
+        if resolved:
+            targets.append(resolved)
+
+    targets = list({t for t in targets if t})
+    if not targets:
+        return set()
+
+    with get_session() as session:
+        rows = session.run(
+            """
+            MATCH (c:Chunk)-[:MENTIONS]->(e)
+            WHERE e.id IN $targets OR e.ontology_id IN $targets
+            RETURN DISTINCT c.id AS chunk_id
+            """,
+            targets=targets,
+        ).data()
+    return {r["chunk_id"] for r in rows}
 
 
 def _subgraph(entities: list[dict]) -> dict:
@@ -85,8 +143,18 @@ def _subgraph(entities: list[dict]) -> dict:
     }
 
 
-def ask(question: str) -> dict:
+def ask(question: str, gene_id: str | None = None, disease_id: str | None = None) -> dict:
     chunks = retrieve_chunks(question)
+
+    # Bias retrieval toward graph-aligned entities when the caller pins one (R6).
+    if chunks and (gene_id or disease_id):
+        biased_ids = _bias_chunk_ids(gene_id, disease_id)
+        if biased_ids:
+            for c in chunks:
+                if c.chunk_id in biased_ids:
+                    c.score = min(1.0, c.score + ENTITY_BIAS_BOOST)
+            chunks.sort(key=lambda x: x.score, reverse=True)
+
     if not chunks or chunks[0].score < settings.min_retrieval_score:
         return {
             "answer": "I don't have enough evidence in the corpus to answer that question.",
@@ -105,16 +173,33 @@ def ask(question: str) -> dict:
         answer = _fallback_answer(question, chunks)
 
     cited_ids = CHUNK_CITE.findall(answer) or [chunks[0].chunk_id]
-    citations = [
-        {
-            "chunk_id": c.chunk_id,
-            "document_id": c.document_id,
-            "snippet": c.text[:300],
-            "score": c.score,
-        }
-        for c in chunks
-        if c.chunk_id in cited_ids or c == chunks[0]
+    cited_chunks = [
+        c for c in chunks if c.chunk_id in cited_ids or c == chunks[0]
     ][: settings.top_k_chunks]
+
+    docs_meta = _documents_meta(list({c.document_id for c in cited_chunks}))
+    citations = []
+    for c in cited_chunks:
+        meta = docs_meta.get(c.document_id, {})
+        title = meta.get("title")
+        citations.append(
+            {
+                "chunk_id": c.chunk_id,
+                "document_id": c.document_id,
+                "document_title": title,
+                "source": meta.get("source"),
+                "snippet": c.text[:300],
+                "score": c.score,
+                "pmid": meta.get("pmid"),
+                "doi": meta.get("doi"),
+                "reference_url": resolve_reference_url(
+                    url=meta.get("url"),
+                    doi=meta.get("doi"),
+                    pmid=meta.get("pmid"),
+                    title=title,
+                ),
+            }
+        )
 
     entities = _entities_from_chunks([c["chunk_id"] for c in citations])
     return {

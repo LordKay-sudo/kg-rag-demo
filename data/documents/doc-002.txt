@@ -1,3 +1,4 @@
 Title: BRCA2 hereditary cancer syndromes
+Source: Synthetic demo abstract (not a real publication)
 
 BRCA2 is a tumor suppressor linked to breast cancer and ovarian cancer. Loss-of-function variants in BRCA2 impair homologous recombination. Clinical guidelines recommend enhanced screening for carriers. Olaparib may benefit selected BRCA2-mutant tumors.

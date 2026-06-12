@@ -9,18 +9,33 @@ class HealthResponse(BaseModel):
 
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=3)
+    gene_id: str | None = Field(
+        default=None,
+        description="Optional Ensembl ENSG id or gene symbol to bias retrieval toward "
+        "graph-aligned entities (roadmap R6).",
+    )
+    disease_id: str | None = Field(
+        default=None,
+        description="Optional EFO/MONDO id or disease slug to bias retrieval (roadmap R6).",
+    )
 
 
 class Citation(BaseModel):
     chunk_id: str
     document_id: str
+    document_title: str | None = None
+    source: str | None = None
     snippet: str
     score: float | None = None
+    pmid: str | None = None
+    doi: str | None = None
+    reference_url: str | None = None
 
 
 class EntityRef(BaseModel):
     type: str
     id: str
+    ontology_id: str | None = None
 
 
 class AskResponse(BaseModel):

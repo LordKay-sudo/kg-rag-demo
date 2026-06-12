@@ -37,8 +37,8 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 
 | ID | Task | Done when |
 |----|------|-----------|
-| **R1** | Every `POST /ask` answer includes **citation block**: chunk id, doc title, passage excerpt | No orphan claims |
-| **R2** | Resolve **PMID / DOI / Europe PMC URL** when present in source metadata | Clickable literature links |
+| ✓ **R1** | Every `POST /ask` answer includes **citation block**: chunk id, doc title, passage excerpt | Citations carry `document_title` + snippet |
+| ✓ **R2** | Resolve **PMID / DOI / Europe PMC URL** when present in source metadata | `reference_url` via `app/references.py` |
 | **R3** | `GET /documents/{id}/chunks` or equivalent for audit trail | Reviewer can open source |
 | **R4** | README + API: explicit **demo corpus, not clinical** disclaimer | Matches BioInsight tone |
 
@@ -48,8 +48,8 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 
 | ID | Task | Depends on | Done when |
 |----|------|------------|-----------|
-| **R5** | Entity resolution: extracted genes → **ENSG**, diseases → **EFO/MONDO** (lookup table or API) | BioInsight 2.x | Same symbol maps to same id in both repos |
-| **R6** | **`POST /ask` optional `gene_id` / `disease_id`** — bias retrieval toward graph-aligned entities | R5 | OpenAPI documented |
+| ✓ **R5** | Entity resolution: extracted genes → **ENSG**, diseases → **EFO/MONDO** (lookup table or API) | BioInsight 2.x | `app/identifiers.py`; `ontology_id` on Gene/Disease nodes |
+| ✓ **R6** | **`POST /ask` optional `gene_id` / `disease_id`** — bias retrieval toward graph-aligned entities | R5 | Params in OpenAPI; biased chunk boost |
 | **R7** | Extraction **provenance**: chunk id, extractor version, confidence on entities | — | Visible in graph explore or API |
 | **R8** | Notebook: BRCA1 — BioInsight scores + kg-rag quotes side by side | BioInsight 4.4 | Single narrative demo |
 | **R16** | `docs/EXTRACTION_SCHEMA.md` — schema **S=(E,R,Φ)**: allowed entities, relations, domain/range rules | — | Extractor/prompt references schema |

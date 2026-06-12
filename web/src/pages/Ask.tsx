@@ -87,8 +87,10 @@ export default function Ask() {
                     key={`${e.type}-${e.id}`}
                     to={`/graph/${encodeURIComponent(e.id)}`}
                     className="tag tag-link"
+                    title={e.ontology_id ? `Shared id: ${e.ontology_id}` : undefined}
                   >
                     {e.type}: {e.id}
+                    {e.ontology_id ? ` (${e.ontology_id})` : ""}
                   </Link>
                 ))}
               </div>
@@ -99,10 +101,19 @@ export default function Ask() {
                 {result.citations.map((c) => (
                   <div key={c.chunk_id} className="citation">
                     <div className="citation-meta">
-                      {c.document_id} · chunk {c.chunk_id}
+                      {c.document_title ?? c.document_id} · chunk {c.chunk_id}
                       {c.score != null ? ` · score ${c.score.toFixed(2)}` : ""}
                     </div>
                     {c.snippet}
+                    {(c.reference_url || c.pmid || c.doi) && (
+                      <div className="citation-link" style={{ marginTop: "0.4rem", fontSize: "0.8rem" }}>
+                        {c.reference_url && (
+                          <a href={c.reference_url} target="_blank" rel="noreferrer">
+                            {c.pmid ? `PMID ${c.pmid}` : c.doi ? `DOI ${c.doi}` : "Source link"} →
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </>

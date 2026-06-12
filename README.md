@@ -22,13 +22,16 @@ KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: doc
 | Rule-based Gene/Disease/Drug extraction | ✅ |
 | Chunk embeddings (MiniLM) + vector search | ✅ |
 | `POST /ask` with Ollama or retrieval fallback | ✅ |
+| Citations with doc title + PMID/DOI/Europe PMC links | ✅ |
+| Shared ENSG/EFO/MONDO IDs with BioInsight | ✅ |
+| Entity-biased ask (`gene_id` / `disease_id`) | ✅ |
 | React Ask + Corpus + About UI | ✅ |
 | `GET /graph/explore` + force-directed graph UI | ✅ |
 | Corpus upload + per-document ingest from browser | ✅ |
 | Full Docker Compose stack | ✅ |
 | GitHub Actions CI | ✅ |
 
-**Corpus (MVP):** 10 synthetic biomedical-style abstracts in `data/documents/`. Suitable for demos; not clinical-grade.
+**Corpus (MVP):** 10 synthetic biomedical-style abstracts in `data/documents/` (clearly marked, not real publications). Suitable for demos; not clinical-grade. See [PROVENANCE.md](PROVENANCE.md).
 
 Pairs with [BioInsight Graph](https://github.com/LordKay-sudo/bioinsight-graph) (structured Open Targets–style associations). Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Ecosystem handoff: [ECOSYSTEM_CONTEXT](https://github.com/LordKay-sudo/bioinsight-graph/blob/main/docs/ECOSYSTEM_CONTEXT.md).
 
@@ -126,10 +129,10 @@ flowchart LR
 ## Graph model
 
 ```cypher
-(:Document {id, title, source, status, ingested_at})
+(:Document {id, title, source, status, ingested_at, pmid, doi, url})
 (:Chunk {id, document_id, text, index})
-(:Gene {id, symbol})
-(:Disease {id, name})
+(:Gene {id, symbol, ontology_id})      // ontology_id = Ensembl ENSG (BioInsight join key)
+(:Disease {id, name, ontology_id})     // ontology_id = EFO / MONDO
 (:Drug {id, name})
 
 (:Chunk)-[:FROM_DOCUMENT]->(:Document)
@@ -139,6 +142,30 @@ flowchart LR
 ```
 
 Chunk embeddings are stored for vector similarity search at query time.
+
+### Shared identifiers with BioInsight
+
+Extracted genes resolve to **Ensembl `ENSG`** ids and diseases to **EFO/MONDO** ids via
+[`api/app/identifiers.py`](api/app/identifiers.py) — the same stable keys
+[BioInsight Graph](https://github.com/LordKay-sudo/bioinsight-graph) uses, so the same
+symbol points to the same node id in both repos (e.g. `BRCA1` → `ENSG00000012048`).
+
+### Document source metadata
+
+Document files carry an optional header that powers clickable citations:
+
+```text
+Title: BRCA1 and breast cancer risk
+Source: Europe PMC
+PMID: 20301425
+DOI: 10.1000/example
+URL: https://europepmc.org/article/MED/20301425
+
+<body text>
+```
+
+Citations resolve a `reference_url` preferring `URL` > `DOI` (doi.org) > `PMID`
+(Europe PMC), falling back to a Europe PMC title search when no id is present.
 
 ---
 
@@ -152,16 +179,29 @@ Base path: `/api/v1`
 | GET | `/documents` | List ingested documents |
 | POST | `/documents` | Upload `.txt` / `.md` (multipart) |
 | POST | `/ingest/{document_id}` | Chunk, extract, embed one document |
-| POST | `/ask` | `{ "question": "..." }` → answer + citations + entities + subgraph |
+| POST | `/ask` | `{ "question": "...", "gene_id"?, "disease_id"? }` → answer + citations + entities + subgraph |
 | GET | `/graph/explore?entity_id=` | One-hop subgraph around an entity |
+
+`gene_id` / `disease_id` are optional and accept either a symbol/slug (`BRCA1`,
+`breast_cancer`) or a shared ontology id (`ENSG00000012048`, `EFO_0000305`); when set,
+chunks mentioning that entity are boosted in retrieval.
 
 Example `/ask` response:
 
 ```json
 {
-  "answer": "Gene BRCA1 is associated with breast cancer in document doc-001.",
-  "citations": [{ "chunk_id": "chunk-12", "document_id": "doc-001", "snippet": "..." }],
-  "entities": [{ "type": "Gene", "id": "BRCA1" }],
+  "answer": "BRCA1 is associated with breast cancer [chunk:doc-001-chunk-0].",
+  "citations": [{
+    "chunk_id": "doc-001-chunk-0",
+    "document_id": "doc-001",
+    "document_title": "BRCA1 and breast cancer risk",
+    "source": "Synthetic demo abstract (not a real publication)",
+    "snippet": "BRCA1 mutations substantially increase ...",
+    "pmid": null,
+    "doi": null,
+    "reference_url": "https://europepmc.org/search?query=BRCA1+and+breast+cancer+risk"
+  }],
+  "entities": [{ "type": "Gene", "id": "BRCA1", "ontology_id": "ENSG00000012048" }],
   "subgraph": { "nodes": [], "edges": [] }
 }
 ```
@@ -230,6 +270,7 @@ node scripts/capture_screenshots.mjs
 | 4 | RAG `/ask` with Ollama or fallback | ✅ |
 | 5 | React Ask UI + citation panels | ✅ |
 | 6 | Graph explorer + Docker + README screenshots | ✅ |
+| 7 | Citations w/ PMID/DOI links (R1/R2) + shared ENSG/EFO ids & biased ask (R5/R6) | ✅ |
 
 ---
 

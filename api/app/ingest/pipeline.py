@@ -5,9 +5,11 @@ from pathlib import Path
 
 from app.config import settings
 from app.db import get_session
+from app.identifiers import resolve_entity_id
 from app.ingest.chunker import chunk_text
 from app.ingest.embedder import embed_texts
 from app.ingest.extractor import extract_entities
+from app.ingest.metadata import parse_document
 
 
 def ingest_document(document_id: str) -> dict:
@@ -16,9 +18,9 @@ def ingest_document(document_id: str) -> dict:
         raise FileNotFoundError(f"Document file not found: {path}")
 
     raw = path.read_text(encoding="utf-8")
-    lines = raw.splitlines()
-    title = lines[0].replace("Title: ", "") if lines else document_id
-    body = "\n".join(lines[1:]).strip() or raw
+    meta = parse_document(raw, fallback_title=document_id)
+    title = meta.title
+    body = meta.body
 
     chunks = chunk_text(body, settings.chunk_size, settings.chunk_overlap)
     embeddings = embed_texts(chunks)
@@ -27,11 +29,15 @@ def ingest_document(document_id: str) -> dict:
         session.run(
             """
             MERGE (d:Document {id: $id})
-            SET d.title = $title, d.source = $source, d.status = 'ingesting'
+            SET d.title = $title, d.source = $source, d.status = 'ingesting',
+                d.pmid = $pmid, d.doi = $doi, d.url = $url
             """,
             id=document_id,
             title=title,
-            source=path.name,
+            source=meta.source or path.name,
+            pmid=meta.pmid,
+            doi=meta.doi,
+            url=meta.url,
         )
 
         session.run(
@@ -67,14 +73,17 @@ def ingest_document(document_id: str) -> dict:
 
             for ent in entities:
                 label = ent.type
+                ontology_id = resolve_entity_id(ent.type, ent.id)
                 session.run(
                     f"""
                     MERGE (e:{label} {{id: $id}})
+                    SET e.ontology_id = coalesce($ontology_id, e.ontology_id)
                     WITH e
                     MATCH (c:Chunk {{id: $chunk_id}})
                     MERGE (c)-[:MENTIONS]->(e)
                     """,
                     id=ent.id,
+                    ontology_id=ontology_id,
                     chunk_id=chunk_id,
                 )
 

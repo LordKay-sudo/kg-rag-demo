@@ -6,6 +6,7 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from app.config import settings
 from app.db import get_session
+from app.ingest.metadata import parse_document
 from app.ingest.pipeline import ingest_document
 from app.models.schemas import DocumentSummary, IngestResponse, UploadResponse
 
@@ -26,23 +27,19 @@ def _unique_doc_id(base: str) -> str:
     return f"{candidate}_{uuid.uuid4().hex[:6]}"
 
 
-def _parse_upload(content: str, filename: str) -> tuple[str, str]:
-    lines = content.strip().splitlines()
-    if lines and lines[0].lower().startswith("title:"):
-        title = lines[0].split(":", 1)[1].strip()
-        body = "\n".join(lines[1:]).strip()
-    else:
-        title = Path(filename).stem.replace("_", " ").replace("-", " ").title()
-        body = content.strip()
-    if not body:
-        raise ValueError("Document body is empty")
-    return title, body
-
-
-def _write_document_file(doc_id: str, title: str, body: str) -> Path:
+def _write_document_file(doc_id: str, meta) -> Path:
     settings.documents_dir.mkdir(parents=True, exist_ok=True)
     path = settings.documents_dir / f"{doc_id}.txt"
-    path.write_text(f"Title: {title}\n\n{body}\n", encoding="utf-8")
+    header = [f"Title: {meta.title}"]
+    if meta.source:
+        header.append(f"Source: {meta.source}")
+    if meta.pmid:
+        header.append(f"PMID: {meta.pmid}")
+    if meta.doi:
+        header.append(f"DOI: {meta.doi}")
+    if meta.url:
+        header.append(f"URL: {meta.url}")
+    path.write_text("\n".join(header) + f"\n\n{meta.body}\n", encoding="utf-8")
     return path
 
 
@@ -68,13 +65,13 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
         raise HTTPException(status_code=400, detail="Only .txt and .md files are supported")
 
     raw = (await file.read()).decode("utf-8")
-    try:
-        title, body = _parse_upload(raw, file.filename or "upload.txt")
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+    fallback_title = Path(file.filename or "upload.txt").stem.replace("_", " ").replace("-", " ").title()
+    meta = parse_document(raw, fallback_title=fallback_title)
+    if not meta.body:
+        raise HTTPException(status_code=400, detail="Document body is empty")
 
-    doc_id = _unique_doc_id(Path(file.filename or title).stem)
-    path = _write_document_file(doc_id, title, body)
+    doc_id = _unique_doc_id(Path(file.filename or meta.title).stem)
+    path = _write_document_file(doc_id, meta)
 
     with get_session() as session:
         session.run(
@@ -82,15 +79,21 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
             MERGE (d:Document {id: $id})
             SET d.title = $title,
                 d.source = $source,
+                d.pmid = $pmid,
+                d.doi = $doi,
+                d.url = $url,
                 d.status = 'pending',
                 d.ingested_at = null
             """,
             id=doc_id,
-            title=title,
-            source=path.name,
+            title=meta.title,
+            source=meta.source or path.name,
+            pmid=meta.pmid,
+            doi=meta.doi,
+            url=meta.url,
         )
 
-    return UploadResponse(document_id=doc_id, title=title, status="pending")
+    return UploadResponse(document_id=doc_id, title=meta.title, status="pending")
 
 
 @router.post("/ingest/{document_id}", response_model=IngestResponse)
