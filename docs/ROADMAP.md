@@ -39,8 +39,8 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 |----|------|-----------|
 | ✓ **R1** | Every `POST /ask` answer includes **citation block**: chunk id, doc title, passage excerpt | Citations carry `document_title` + snippet |
 | ✓ **R2** | Resolve **PMID / DOI / Europe PMC URL** when present in source metadata | `reference_url` via `app/references.py` |
-| **R3** | `GET /documents/{id}/chunks` or equivalent for audit trail | Reviewer can open source |
-| **R4** | README + API: explicit **demo corpus, not clinical** disclaimer | Matches BioInsight tone |
+| ✓ **R3** | `GET /documents/{id}/chunks` or equivalent for audit trail | Returns chunks + entities + reference_url |
+| ✓ **R4** | README + API: explicit **demo corpus, not clinical** disclaimer | `disclaimer` on `/health`; README + PROVENANCE.md |
 
 ---
 

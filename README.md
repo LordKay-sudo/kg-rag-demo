@@ -11,6 +11,8 @@
 
 ---
 
+> **Disclaimer:** This is a **demonstration** built on a synthetic corpus — **not real publications and not clinical-grade**. Extracted associations are illustrative, not causal. Do not use for diagnosis or treatment decisions. See [PROVENANCE.md](PROVENANCE.md).
+
 ## Overview
 
 KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: document chunking → rule-based entity extraction → Neo4j graph + vector index → retrieval-augmented answers with source citations.
@@ -175,8 +177,9 @@ Base path: `/api/v1`
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | API, Neo4j, LLM provider status |
+| GET | `/health` | API, Neo4j, LLM provider status + demo disclaimer |
 | GET | `/documents` | List ingested documents |
+| GET | `/documents/{id}/chunks` | Audit trail: chunks + extracted entities + reference link |
 | POST | `/documents` | Upload `.txt` / `.md` (multipart) |
 | POST | `/ingest/{document_id}` | Chunk, extract, embed one document |
 | POST | `/ask` | `{ "question": "...", "gene_id"?, "disease_id"? }` → answer + citations + entities + subgraph |

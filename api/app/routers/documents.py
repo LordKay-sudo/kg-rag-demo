@@ -8,7 +8,15 @@ from app.config import settings
 from app.db import get_session
 from app.ingest.metadata import parse_document
 from app.ingest.pipeline import ingest_document
-from app.models.schemas import DocumentSummary, IngestResponse, UploadResponse
+from app.models.schemas import (
+    ChunkDetail,
+    DocumentChunksResponse,
+    DocumentSummary,
+    EntityRef,
+    IngestResponse,
+    UploadResponse,
+)
+from app.references import resolve_reference_url
 
 router = APIRouter(tags=["documents"])
 
@@ -94,6 +102,61 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
         )
 
     return UploadResponse(document_id=doc_id, title=meta.title, status="pending")
+
+
+@router.get("/documents/{document_id}/chunks", response_model=DocumentChunksResponse)
+def get_document_chunks(document_id: str) -> DocumentChunksResponse:
+    """Audit trail (roadmap R3): every chunk + extracted entities behind a citation."""
+    with get_session() as session:
+        doc = session.run(
+            """
+            MATCH (d:Document {id: $id})
+            RETURN d.id AS id, d.title AS title, d.source AS source,
+                   d.pmid AS pmid, d.doi AS doi, d.url AS url
+            """,
+            id=document_id,
+        ).single()
+        if not doc:
+            raise HTTPException(status_code=404, detail="Document not found")
+
+        rows = session.run(
+            """
+            MATCH (c:Chunk {document_id: $id})
+            OPTIONAL MATCH (c)-[:MENTIONS]->(e)
+            RETURN c.id AS chunk_id, c.index AS index, c.text AS text,
+                   collect(DISTINCT {type: labels(e)[0], id: e.id,
+                                     ontology_id: e.ontology_id}) AS entities
+            ORDER BY c.index
+            """,
+            id=document_id,
+        ).data()
+
+    chunks = [
+        ChunkDetail(
+            chunk_id=r["chunk_id"],
+            index=r["index"] if r["index"] is not None else 0,
+            text=r["text"],
+            entities=[
+                EntityRef(type=e["type"], id=e["id"], ontology_id=e.get("ontology_id"))
+                for e in r["entities"]
+                if e.get("type") and e.get("id")
+            ],
+        )
+        for r in rows
+    ]
+
+    return DocumentChunksResponse(
+        document_id=doc["id"],
+        title=doc.get("title"),
+        source=doc.get("source"),
+        pmid=doc.get("pmid"),
+        doi=doc.get("doi"),
+        reference_url=resolve_reference_url(
+            url=doc.get("url"), doi=doc.get("doi"), pmid=doc.get("pmid"), title=doc.get("title")
+        ),
+        chunk_count=len(chunks),
+        chunks=chunks,
+    )
 
 
 @router.post("/ingest/{document_id}", response_model=IngestResponse)

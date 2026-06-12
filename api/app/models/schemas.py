@@ -1,10 +1,17 @@
 from pydantic import BaseModel, Field
 
 
+DISCLAIMER = (
+    "Demo corpus of synthetic biomedical-style abstracts — not real publications, "
+    "not clinical-grade. Associations are illustrative, not causal. See PROVENANCE.md."
+)
+
+
 class HealthResponse(BaseModel):
     status: str
     neo4j: bool
     llm_provider: str
+    disclaimer: str = DISCLAIMER
 
 
 class AskRequest(BaseModel):
@@ -57,6 +64,24 @@ class IngestResponse(BaseModel):
     document_id: str
     chunks: int
     status: str
+
+
+class ChunkDetail(BaseModel):
+    chunk_id: str
+    index: int
+    text: str
+    entities: list[EntityRef] = []
+
+
+class DocumentChunksResponse(BaseModel):
+    document_id: str
+    title: str | None = None
+    source: str | None = None
+    pmid: str | None = None
+    doi: str | None = None
+    reference_url: str | None = None
+    chunk_count: int
+    chunks: list[ChunkDetail]
 
 
 class SubgraphNode(BaseModel):

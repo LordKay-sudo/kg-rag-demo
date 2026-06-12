@@ -11,8 +11,56 @@ def test_health_ok():
     with patch("app.routers.health.check_connectivity", return_value=True):
         r = client.get("/api/v1/health")
     assert r.status_code == 200
-    assert r.json()["status"] == "ok"
-    assert r.json()["neo4j"] is True
+    body = r.json()
+    assert body["status"] == "ok"
+    assert body["neo4j"] is True
+    assert "not clinical-grade" in body["disclaimer"]
+
+
+def test_document_chunks_audit_trail():
+    session = MagicMock()
+    session.run.side_effect = [
+        MagicMock(
+            single=lambda: {
+                "id": "doc-001",
+                "title": "BRCA1 and breast cancer risk",
+                "source": "Synthetic demo abstract",
+                "pmid": "20301425",
+                "doi": None,
+                "url": None,
+            }
+        ),
+        MagicMock(
+            data=lambda: [
+                {
+                    "chunk_id": "doc-001-chunk-0",
+                    "index": 0,
+                    "text": "BRCA1 increases breast cancer risk.",
+                    "entities": [
+                        {"type": "Gene", "id": "BRCA1", "ontology_id": "ENSG00000012048"}
+                    ],
+                }
+            ]
+        ),
+    ]
+    with patch("app.routers.documents.get_session") as mock_get:
+        mock_get.return_value.__enter__.return_value = session
+        r = client.get("/api/v1/documents/doc-001/chunks")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["document_id"] == "doc-001"
+    assert body["chunk_count"] == 1
+    assert body["reference_url"] == "https://europepmc.org/article/MED/20301425"
+    assert body["chunks"][0]["entities"][0]["ontology_id"] == "ENSG00000012048"
+
+
+def test_document_chunks_not_found():
+    session = MagicMock()
+    session.run.return_value.single.return_value = None
+    with patch("app.routers.documents.get_session") as mock_get:
+        mock_get.return_value.__enter__.return_value = session
+        r = client.get("/api/v1/documents/missing/chunks")
+    assert r.status_code == 404
 
 
 def test_explore_graph():

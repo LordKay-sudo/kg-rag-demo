@@ -64,6 +64,24 @@ export interface IngestResponse {
   status: string;
 }
 
+export interface ChunkDetail {
+  chunk_id: string;
+  index: number;
+  text: string;
+  entities: EntityRef[];
+}
+
+export interface DocumentChunksResponse {
+  document_id: string;
+  title?: string | null;
+  source?: string | null;
+  pmid?: string | null;
+  doi?: string | null;
+  reference_url?: string | null;
+  chunk_count: number;
+  chunks: ChunkDetail[];
+}
+
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, init);
   if (!res.ok) {
@@ -104,6 +122,10 @@ export const api = {
       body: JSON.stringify({ question }),
     }),
   listDocuments: () => fetchJson<DocumentSummary[]>("/api/v1/documents"),
+  documentChunks: (documentId: string) =>
+    fetchJson<DocumentChunksResponse>(
+      `/api/v1/documents/${encodeURIComponent(documentId)}/chunks`
+    ),
   uploadDocument: (file: File) => {
     const form = new FormData();
     form.append("file", file);
@@ -118,5 +140,7 @@ export const api = {
       `/api/v1/graph/explore?entity_id=${encodeURIComponent(entityId)}`
     ),
   health: () =>
-    fetchJson<{ status: string; neo4j: boolean; llm_provider: string }>("/api/v1/health"),
+    fetchJson<{ status: string; neo4j: boolean; llm_provider: string; disclaimer: string }>(
+      "/api/v1/health"
+    ),
 };
