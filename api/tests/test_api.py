@@ -113,3 +113,15 @@ def test_explore_not_found():
         mock_get.return_value.__enter__.return_value = session
         r = client.get("/api/v1/graph/explore", params={"entity_id": "MISSING"})
     assert r.status_code == 404
+
+
+def test_ask_plan_endpoint():
+    r = client.post(
+        "/api/v1/ask/plan",
+        json={"question": "What links BRCA1 to breast cancer?"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["intent"] == "gene_disease"
+    assert body["suggested_gene_id"] == "BRCA1"
+    assert len(body["steps"]) >= 2

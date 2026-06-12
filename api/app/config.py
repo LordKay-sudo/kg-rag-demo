@@ -20,8 +20,13 @@ class Settings(BaseSettings):
     chunk_size: int = 500
     chunk_overlap: int = 80
     top_k_chunks: int = 5
+    compact_top_k: int = 2
+    compact_snippet_chars: int = 120
     min_retrieval_score: float = 0.25
+    widen_top_k: int = 10
+    widen_min_retrieval_score: float = 0.15
     cors_origins: str = "http://localhost:5173"
+    bioinsight_api_url: str = ""
 
     documents_dir: Path = ROOT / "data" / "documents"
     prompts_dir: Path = ROOT / "prompts"

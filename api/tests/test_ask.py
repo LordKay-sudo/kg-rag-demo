@@ -77,5 +77,30 @@ def test_gene_bias_reorders_chunks():
         mock_get.return_value.__enter__.return_value = session
         result = ask("Tell me about BRCA1", gene_id="BRCA1")
 
-    # Biased chunk (c-brca, +0.15 -> 0.60) should now rank first.
     assert result["citations"][0]["chunk_id"] == "c-brca"
+
+
+def test_compact_mode_caps_citations_and_flags_insufficient():
+    chunks = [
+        RetrievedChunk(chunk_id="c1", document_id="doc-001", text="x" * 200, score=0.28),
+        RetrievedChunk(chunk_id="c2", document_id="doc-001", text="y" * 200, score=0.27),
+        RetrievedChunk(chunk_id="c3", document_id="doc-001", text="z" * 200, score=0.26),
+    ]
+    meta_rows = [{"id": "doc-001", "title": "T", "source": None, "pmid": None, "doi": None, "url": None}]
+    session = _doc_meta_session(meta_rows)
+    with patch("app.rag.orchestrator.retrieve_chunks", return_value=chunks), \
+         patch("app.rag.orchestrator.settings") as s, \
+         patch("app.rag.orchestrator.get_session") as mock_get:
+        s.min_retrieval_score = 0.30
+        s.widen_min_retrieval_score = 0.15
+        s.compact_top_k = 2
+        s.compact_snippet_chars = 50
+        s.top_k_chunks = 5
+        s.llm_provider = "none"
+        mock_get.return_value.__enter__.return_value = session
+        result = ask("BRCA1?", compact=True)
+
+    assert result["insufficient_evidence"] is True
+    assert len(result["citations"]) <= 2
+    assert len(result["citations"][0]["snippet"]) <= 50
+    assert "[Partial evidence" in result["answer"]

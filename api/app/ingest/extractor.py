@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from app.rag.query_expand import expand_question
+
 # Bump when extraction rules change so provenance on MENTIONS edges is auditable (R7).
 EXTRACTOR_VERSION = "rule-v1"
 
@@ -62,6 +64,7 @@ class ExtractedRelation:
 
 
 def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRelation]]:
+    text = expand_question(text)
     entities: list[ExtractedEntity] = []
     seen: set[tuple[str, str]] = set()
 

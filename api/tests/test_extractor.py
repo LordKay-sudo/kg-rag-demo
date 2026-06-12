@@ -28,3 +28,8 @@ def test_extracts_drug():
     text = "Olaparib may benefit BRCA1-associated breast cancer."
     entities, _ = extract_entities(text)
     assert any(e.type == "Drug" and e.id == "olaparib" for e in entities)
+
+
+def test_extracts_hyphenated_gene_alias():
+    entities, _ = extract_entities("BRCA-1 mutations increase breast cancer risk.")
+    assert any(e.type == "Gene" and e.id == "BRCA1" for e in entities)

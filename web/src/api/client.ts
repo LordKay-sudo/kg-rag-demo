@@ -42,6 +42,25 @@ export interface AskResponse {
     nodes: Array<{ label: string; id: string; name?: string }>;
     edges: Array<{ source: string; target: string; type: string }>;
   };
+  insufficient_evidence?: boolean;
+  expanded_question?: string | null;
+}
+
+export interface AskPlanStep {
+  sub_query: string;
+  entity_type?: string | null;
+  entity_id?: string | null;
+  ontology_id?: string | null;
+}
+
+export interface AskPlanResponse {
+  question: string;
+  expanded_question: string;
+  intent: string;
+  steps: AskPlanStep[];
+  suggested_gene_id?: string | null;
+  suggested_disease_id?: string | null;
+  widen_retrieval: boolean;
 }
 
 export interface DocumentSummary {
@@ -115,11 +134,20 @@ export function subgraphFromAsk(result: AskResponse): ExploreResponse | null {
 }
 
 export const api = {
-  ask: (question: string) =>
+  ask: (
+    question: string,
+    opts?: { gene_id?: string; disease_id?: string; weak_graph_evidence?: boolean; compact?: boolean }
+  ) =>
     fetchJson<AskResponse>("/api/v1/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question, ...opts }),
+    }),
+  askPlan: (question: string, opts?: { gene_id?: string; disease_id?: string }) =>
+    fetchJson<AskPlanResponse>("/api/v1/ask/plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, ...opts }),
     }),
   listDocuments: () => fetchJson<DocumentSummary[]>("/api/v1/documents"),
   documentChunks: (documentId: string) =>

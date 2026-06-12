@@ -25,6 +25,31 @@ class AskRequest(BaseModel):
         default=None,
         description="Optional EFO/MONDO id or disease slug to bias retrieval (roadmap R6).",
     )
+    weak_graph_evidence: bool = Field(
+        default=False,
+        description="Widen vector retrieval when structured graph evidence is sparse (R10).",
+    )
+    compact: bool = Field(
+        default=False,
+        description="Token-efficient mode: fewer chunks, shorter snippets (R12).",
+    )
+
+
+class PlanStep(BaseModel):
+    sub_query: str
+    entity_type: str | None = None
+    entity_id: str | None = None
+    ontology_id: str | None = None
+
+
+class AskPlanResponse(BaseModel):
+    question: str
+    expanded_question: str
+    intent: str
+    steps: list[PlanStep]
+    suggested_gene_id: str | None = None
+    suggested_disease_id: str | None = None
+    widen_retrieval: bool = False
 
 
 class Citation(BaseModel):
@@ -52,6 +77,8 @@ class AskResponse(BaseModel):
     citations: list[Citation]
     entities: list[EntityRef]
     subgraph: dict
+    insufficient_evidence: bool = False
+    expanded_question: str | None = None
 
 
 class DocumentSummary(BaseModel):

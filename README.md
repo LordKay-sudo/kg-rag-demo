@@ -28,7 +28,7 @@ KG RAG Demo shows how **unstructured text** becomes **queryable knowledge**: doc
 | Shared ENSG/EFO/MONDO IDs with BioInsight | ✅ |
 | Entity-biased ask (`gene_id` / `disease_id`) | ✅ |
 | Chunk audit trail + extraction provenance (confidence, version) | ✅ |
-| BRCA1 structured-vs-literature notebook | ✅ |
+| Plan-aware RAG: `/ask/plan`, conditional widen, synonym expand, compact mode | ✅ |
 | React Ask + Corpus + About UI | ✅ |
 | `GET /graph/explore` + force-directed graph UI | ✅ |
 | Corpus upload + per-document ingest from browser | ✅ |
@@ -184,7 +184,8 @@ Base path: `/api/v1`
 | GET | `/documents/{id}/chunks` | Audit trail: chunks + extracted entities + reference link |
 | POST | `/documents` | Upload `.txt` / `.md` (multipart) |
 | POST | `/ingest/{document_id}` | Chunk, extract, embed one document |
-| POST | `/ask` | `{ "question": "...", "gene_id"?, "disease_id"? }` → answer + citations + entities + subgraph |
+| POST | `/ask/plan` | Decompose question → sub-queries + entity hints (R9) |
+| POST | `/ask` | `{ "question", "gene_id"?, "disease_id"?, "weak_graph_evidence"?, "compact"? }` → answer + citations |
 | GET | `/graph/explore?entity_id=` | One-hop subgraph around an entity |
 
 `gene_id` / `disease_id` are optional and accept either a symbol/slug (`BRCA1`,
@@ -207,9 +208,13 @@ Example `/ask` response:
     "reference_url": "https://europepmc.org/search?query=BRCA1+and+breast+cancer+risk"
   }],
   "entities": [{ "type": "Gene", "id": "BRCA1", "ontology_id": "ENSG00000012048" }],
-  "subgraph": { "nodes": [], "edges": [] }
+  "subgraph": { "nodes": [], "edges": [] },
+  "insufficient_evidence": false,
+  "expanded_question": "What links BRCA1 to breast cancer?"
 }
 ```
+
+**Plan-first workflow (R9):** `POST /ask/plan` returns sub-queries and `widen_retrieval` hint before calling `/ask`. Set `weak_graph_evidence: true` (or configure `BIOINSIGHT_API_URL`) to widen retrieval when structured graph evidence is sparse (R10). Use `compact: true` for fewer/shorter citations with an honest `insufficient_evidence` flag (R12).
 
 Interactive docs: http://localhost:8001/docs
 
@@ -278,6 +283,7 @@ node scripts/capture_screenshots.mjs
 | 6 | Graph explorer + Docker + README screenshots | ✅ |
 | 7 | Citations w/ PMID/DOI links (R1/R2) + shared ENSG/EFO ids & biased ask (R5/R6) | ✅ |
 | 8 | Chunk audit + disclaimer (R3/R4), extraction provenance (R7), BRCA1 notebook (R8) | ✅ |
+| 9 | Plan-aware RAG: `/ask/plan`, conditional widen (R10), synonyms (R11), compact mode (R12) | ✅ |
 
 ---
 

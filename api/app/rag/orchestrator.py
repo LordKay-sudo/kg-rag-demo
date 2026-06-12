@@ -7,6 +7,7 @@ import httpx
 from app.config import settings
 from app.db import get_session
 from app.identifiers import resolve_disease_id, resolve_gene_id
+from app.rag.query_expand import expand_question
 from app.rag.retriever import retrieve_chunks
 from app.references import resolve_reference_url
 
@@ -143,8 +144,35 @@ def _subgraph(entities: list[dict]) -> dict:
     }
 
 
-def ask(question: str, gene_id: str | None = None, disease_id: str | None = None) -> dict:
-    chunks = retrieve_chunks(question)
+def _empty_response(*, expanded_question: str | None = None) -> dict:
+    return {
+        "answer": "I don't have enough evidence in the corpus to answer that question.",
+        "citations": [],
+        "entities": [],
+        "subgraph": {"nodes": [], "edges": []},
+        "insufficient_evidence": True,
+        "expanded_question": expanded_question,
+    }
+
+
+def ask(
+    question: str,
+    gene_id: str | None = None,
+    disease_id: str | None = None,
+    *,
+    weak_graph_evidence: bool = False,
+    compact: bool = False,
+) -> dict:
+    expanded = expand_question(question)
+    top_k = settings.compact_top_k if compact else settings.top_k_chunks
+    snippet_len = settings.compact_snippet_chars if compact else 300
+    min_score = settings.min_retrieval_score
+
+    if weak_graph_evidence:
+        top_k = max(top_k, settings.widen_top_k)
+        min_score = settings.widen_min_retrieval_score
+
+    chunks = retrieve_chunks(expanded, top_k=top_k)
 
     # Bias retrieval toward graph-aligned entities when the caller pins one (R6).
     if chunks and (gene_id or disease_id):
@@ -155,13 +183,10 @@ def ask(question: str, gene_id: str | None = None, disease_id: str | None = None
                     c.score = min(1.0, c.score + ENTITY_BIAS_BOOST)
             chunks.sort(key=lambda x: x.score, reverse=True)
 
-    if not chunks or chunks[0].score < settings.min_retrieval_score:
-        return {
-            "answer": "I don't have enough evidence in the corpus to answer that question.",
-            "citations": [],
-            "entities": [],
-            "subgraph": {"nodes": [], "edges": []},
-        }
+    insufficient = not chunks or chunks[0].score < settings.min_retrieval_score
+    admit_score = settings.widen_min_retrieval_score if compact else min_score
+    if not chunks or chunks[0].score < admit_score:
+        return _empty_response(expanded_question=expanded)
 
     template = (settings.prompts_dir / "answer_with_citations.txt").read_text(encoding="utf-8")
     prompt = template.format(context=_build_context(chunks), question=question)
@@ -172,10 +197,17 @@ def ask(question: str, gene_id: str | None = None, disease_id: str | None = None
     if not answer:
         answer = _fallback_answer(question, chunks)
 
+    if insufficient and compact:
+        answer = (
+            f"[Partial evidence — top retrieval score {chunks[0].score:.2f}] "
+            + answer
+        )
+
     cited_ids = CHUNK_CITE.findall(answer) or [chunks[0].chunk_id]
+    cite_cap = settings.compact_top_k if compact else settings.top_k_chunks
     cited_chunks = [
         c for c in chunks if c.chunk_id in cited_ids or c == chunks[0]
-    ][: settings.top_k_chunks]
+    ][:cite_cap]
 
     docs_meta = _documents_meta(list({c.document_id for c in cited_chunks}))
     citations = []
@@ -188,7 +220,7 @@ def ask(question: str, gene_id: str | None = None, disease_id: str | None = None
                 "document_id": c.document_id,
                 "document_title": title,
                 "source": meta.get("source"),
-                "snippet": c.text[:300],
+                "snippet": c.text[:snippet_len],
                 "score": c.score,
                 "pmid": meta.get("pmid"),
                 "doi": meta.get("doi"),
@@ -207,4 +239,6 @@ def ask(question: str, gene_id: str | None = None, disease_id: str | None = None
         "citations": citations,
         "entities": entities,
         "subgraph": _subgraph(entities),
+        "insufficient_evidence": insufficient,
+        "expanded_question": expanded,
     }

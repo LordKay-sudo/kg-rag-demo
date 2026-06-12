@@ -61,10 +61,10 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 
 | ID | Task | Done when |
 |----|------|-----------|
-| **R9** | **`POST /ask/plan`** (or prompt contract): decompose question → sub-queries + which entities | Returns plan JSON before retrieval |
-| **R10** | **Conditional retrieval**: if graph API reports weak evidence (optional header/param), widen lexical/vector query | Documented in README |
-| **R11** | Synonym / symbol merge for gene names (BRCA1, BRCA-1) in extractor or query expander | Fewer missed hits |
-| **R12** | Token-efficient mode: top-k chunks cap with “insufficient evidence” flag | Honest partial answers |
+| ✓ **R9** | **`POST /ask/plan`**: decompose question → sub-queries + which entities | Returns plan JSON before retrieval |
+| ✓ **R10** | **Conditional retrieval**: if graph API reports weak evidence (optional param), widen lexical/vector query | `weak_graph_evidence` + optional BioInsight check |
+| ✓ **R11** | Synonym / symbol merge for gene names (BRCA1, BRCA-1) in extractor or query expander | `app/rag/query_expand.py` |
+| ✓ **R12** | Token-efficient mode: top-k chunks cap with "insufficient evidence" flag | `compact` on `/ask` |
 
 ---
 
