@@ -1,0 +1,8 @@
+Title: High-Dose Furmonertinib Management of Advanced NSCLC Harboring an EGFR Exon 14 Missense Mutation: A Case Report and Literature Review.
+Source: Europe PMC open access abstract
+PMID: 42231545
+DOI: 10.12659/ajcr.949630
+URL: https://europepmc.org/article/MED/42231545
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+BACKGROUND Epidermal growth factor receptor (EGFR) is a key driver gene in non-small-cell lung cancer (NSCLC), and EGFR tyrosine kinase inhibitors (TKIs) are the standard treatment for classical mutations, including exon 19 deletion and exon 21 L858R. However, the optimal treatment for rare EGFR exon 14 mutations remains unclear. CASE REPORT We report the case of a 58-year-old Chinese woman with advanced NSCLC. She was initially treated with icotinib for an EGFR exon 21 L858R mutation but the disease progressed after 4 months. Second-line furmonertinib at 80 mg qd was administered for 5 months, then escalated to 120 mg qd upon progression. Due to disease progression and intolerance to chemotherapy and radiotherapy, repeat NGS revealed the loss of L858R and the emergence of an EGFR exon 14 missense mutation. High-dose furmonertinib was sequentially prescribed: 160 mg qd for 4 months, 200 mg qd for nearly 2 months, and 240 mg qd until July 2025, when she was admitted to the intensive care unit for infection-related respiratory failure. The overall survival with high-dose furmonertinib after detecting the exon 14 mutation is at least 20 months. CONCLUSIONS As a single case with multiple confounders, this study generates hypotheses but does not confirm efficacy. Further investigation is required to validate high-dose furmonertinib for NSCLC with EGFR exon 14 missense mutations.

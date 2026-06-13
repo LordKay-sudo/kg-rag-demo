@@ -1,0 +1,8 @@
+Title: Sunvozertinib in EGFR Exon 20 Insertion NSCLC: Approved but Not Available - Practical Dose Selection Considerations and Real-World Access Challenges.
+Source: Europe PMC open access abstract
+PMID: 42238296
+DOI: 10.2147/lctt.s592922
+URL: https://europepmc.org/article/MED/42238296
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Sunvozertinib has emerged as one of the most promising tyrosine kinase inhibitors (TKIs) for previously treated non-small cell lung cancer (NSCLC) harboring epidermal growth factor receptor (EGFR) exon 20 insertion (exon20ins) mutations, a molecular subset with limited sensitivity to conventional EGFR TKIs and a persistent unmet need especially in the second-line setting. Regulatory approvals have occurred at different doses - 300 mg daily in China based on WU-KONG6 and 200mg daily in the United States based on WU-KONG1B - raising an important question regarding optimal dose selection in clinical practice. In this editorial, we outline the preclinical and clinical evidence supporting sunvozertinib's approval, compare the efficacy and tolerability at 200mg versus 300mg, and discuss other emerging TKIs in this evolving treatment landscape. Finally, we highlight a critical paradox: despite FDA approval, sunvozertinib remains largely inaccessible to patients in the United States.

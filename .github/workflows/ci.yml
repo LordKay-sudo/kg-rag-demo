@@ -32,6 +32,10 @@ jobs:
       - name: Run tests
         run: pytest -q
 
+      - name: Batch ingest dry-run smoke (R14)
+        working-directory: .
+        run: python scripts/batch_ingest.py --prefix doc- --limit 3 --dry-run
+
   web:
     name: Web (build)
     runs-on: ubuntu-latest

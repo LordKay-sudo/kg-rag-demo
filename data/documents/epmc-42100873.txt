@@ -1,0 +1,8 @@
+Title: Base editing and nanoparticle transfection of airway cell types essential for treatment of cystic fibrosis.
+Source: Europe PMC open access abstract
+PMID: 42100873
+DOI: 10.1172/jci.insight.198563
+URL: https://europepmc.org/article/MED/42100873
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Cystic fibrosis (CF) is a life-limiting genetic disorder caused by deleterious variants in the CFTR gene that results in altered mucus impairing the airway epithelia. Durable correction of these variants in airway cells remains a therapeutic challenge for about 10% of individuals unresponsive to CFTR modulators. A common disease-causing CFTR splice site variant, 3120+1G>A, was corrected in primary CF airway cells using base editor RNAs. Single-cell RNA sequencing revealed a remarkable increase in detectable CFTR transcript in most CF airway epithelial cell types resulting in notable enrichment of CFTR-expressing ionocytes and secretory goblet cells. Progenitor basal cell subtypes were edited, but they decreased as a fraction of total cells and CFTR-expressing cells compared with unedited cells. CRISPR base editors delivered by polymeric nanoparticles (PNPs) facilitated functional rescue of CFTR to clinically meaningful levels in immortalized and primary airway cells. PNPs delivered GFP-encoding RNA to progenitor airway cells in fully differentiated airway cultures. Vitronectin was a major component of the PNP corona that formed in vivo, but preincubation with vitronectin did not enhance delivery. Together, these findings validate a scalable, nonviral platform with compelling translational promise for treating CF and other respiratory diseases involving respiratory epithelial cell dysfunction.

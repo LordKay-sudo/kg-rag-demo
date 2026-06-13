@@ -284,6 +284,7 @@ node scripts/capture_screenshots.mjs
 | 7 | Citations w/ PMID/DOI links (R1/R2) + shared ENSG/EFO ids & biased ask (R5/R6) | ✅ |
 | 8 | Chunk audit + disclaimer (R3/R4), extraction provenance (R7), BRCA1 notebook (R8) | ✅ |
 | 9 | Plan-aware RAG: `/ask/plan`, conditional widen (R10), synonyms (R11), compact mode (R12) | ✅ |
+| 10 | Europe PMC OA corpus download + batch ingest + retrieval benchmarks (R13–R15) | ✅ |
 
 ---
 

@@ -1,0 +1,8 @@
+Title: Neural cues differentially modulate colorectal cancer cell behavior depending on patients' genomic background.
+Source: Europe PMC open access abstract
+PMID: 42256296
+DOI: 10.1016/j.isci.2026.116153
+URL: https://europepmc.org/article/MED/42256296
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+While neurons are mostly described as pro-tumorigenic and linked with a poor prognosis, differing outcomes have been reported for colorectal cancer (CRC) due to the lack of control for neural and patient subtype diversity. In this study, we investigated the effect of neural cues on patient-derived CRC cell lines selected based on genomic status, e.g., microsatellite instability (MSI) and KRAS and BRAF mutations. Although most neural signals increased clonogenicity, the adrenergic neurotransmitter epinephrine had the opposite effect. Epinephrine also decreased CRC cell viability, independent of the genomic status. Vasoactive intestinal peptide decreased cell viability only in BRAF wild-type cells. Interestingly, all neural signals induced migration in microsatellite stable (MSS) cells, with no effect in cells with MSI. Epinephrine or glial cell line-derived neurotrophic factor also stimulated migration specifically in BRAF -mutated cells. These results emphasize the importance of targeting specific neural signaling pathways and highlight that patient stratification is essential for cancer neuroscience studies.

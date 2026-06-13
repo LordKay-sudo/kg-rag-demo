@@ -72,9 +72,9 @@ Refinements from ontology/GraphRAG literature ([UniAI-GraphRAG](https://arxiv.or
 
 | ID | Task | Done when |
 |----|------|-----------|
-| **R13** | Ingest 50–100 open-access abstracts (Europe PMC) with licence file | `PROVENANCE.md` in repo |
-| **R14** | Batch ingest CLI + progress | CI smoke on 3 docs |
-| **R15** | Compare retrieval metrics on fixed question set (3–5 questions) | `docs/BENCHMARKS.md` |
+| ✓ **R13** | Ingest 50–100 open-access abstracts (Europe PMC) with licence file | `scripts/download_europepmc.py` + manifest |
+| ✓ **R14** | Batch ingest CLI + progress | `scripts/batch_ingest.py`; CI dry-run smoke |
+| ✓ **R15** | Compare retrieval metrics on fixed question set (3–5 questions) | `scripts/benchmark_retrieval.py` + [BENCHMARKS.md](./BENCHMARKS.md) |
 
 ---
 

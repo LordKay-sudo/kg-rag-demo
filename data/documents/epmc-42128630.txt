@@ -1,0 +1,8 @@
+Title: A potential mechanism for tetraspanin CD82-mediated regulation of EGFR.
+Source: Europe PMC open access abstract
+PMID: 42128630
+DOI: 10.26508/lsa.202503426
+URL: https://europepmc.org/article/MED/42128630
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Epidermal growth factor receptor (EGFR) regulates cell growth, differentiation, and migration through mechanisms of ligand binding and dimerization. Tetraspanin CD82 is known to interact with and regulate EGFR; however, the underlying molecular mechanisms are not clear. In this study, we used detergent-solubilized and detergent-purified EGFR-CD82 complexes and fusion proteins to characterize the interaction of EGFR with CD82 by size-exclusion chromatography and cryo-electron microscopy. Our data show that CD82 binds monomeric EGFR and dissociates from EGFR dimers. Congruently, less EGF is bound to EGFR in the presence of CD82, likely because of reduced EGFR dimerization. AlphaFold2 multimer predictions together with a 15 Å resolution cryo-EM density map support a curved-back conformation of EGFR with a putative interaction site between monomeric EGFR domain IV and the large extracellular loop of CD82. Together, our results support CD82 regulating EGFR function by hindering dimer formation and show CD82 dissociation from EGFR upon EGF-induced EGFR dimerization.

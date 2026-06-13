@@ -1,0 +1,8 @@
+Title: Pancreatitis: correcting CFTR expression and function as a promising effective treatment.
+Source: Europe PMC open access abstract
+PMID: 42146013
+DOI: 10.3389/fphys.2026.1813824
+URL: https://europepmc.org/article/MED/42146013
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+The two principal cell types of the exocrine pancreas, acinar and ductal cells, serve distinct but complementary roles. Acinar cells synthesize and secrete digestive enzymes, whereas duct cells secrete fluid and bicarbonate (HCO 3 - ). Ductal secretion protects the pancreas by producing an alkaline fluid that prevents premature digestive enzyme activation and facilitates their transport to the intestine. A critical step in this protective mechanism is protein kinase A-mediated activation of the luminal Cl - channel, cystic fibrosis transmembrane conductance regulator (CFTR). In this context, increasing evidence indicates that impaired CFTR function represents a common pathological feature across all forms of pancreatitis, the most prevalent disease of the exocrine pancreas. Acute and chronic pancreatitis are inflammatory disorders characterized by pancreatic ductal injury that initiates recurrent inflammatory episodes and subsequent acinar cell damage, for which effective treatments remain lacking. Accordingly, this review aims to summarize current evidence supporting alterations in CFTR expression and activity as key events in pancreatitis pathogenesis. Furthermore, given the availability of safe and effective CFTR correctors and potentiators currently approved for the treatment of cystic fibrosis, we argue that these agents warrant strong consideration as potential therapeutic strategies for pancreatitis.

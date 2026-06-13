@@ -2,12 +2,30 @@
 
 ## Demo corpus
 
-The seed corpus in `data/documents/` is **10 synthetic biomedical-style abstracts**
-written for demonstration. They are **not real publications** — each file is marked
-`Source: Synthetic demo abstract (not a real publication)`.
+The seed corpus in `data/documents/` includes:
+
+1. **10 synthetic biomedical-style abstracts** (`doc-001` … `doc-010`) — written for
+   demonstration, marked `Source: Synthetic demo abstract (not a real publication)`.
+2. **Europe PMC open-access abstracts** (`epmc-<PMID>.txt`) — optional scale corpus
+   downloaded via `scripts/download_europepmc.py` (roadmap R13).
 
 Use this project to demonstrate the *pipeline* (chunk → extract → embed → cited Q&A),
-not to look up factual biomedical claims.
+not to look up factual biomedical claims without verifying primary sources.
+
+## Europe PMC open-access ingest (R13)
+
+| Item | Detail |
+|------|--------|
+| **API** | [Europe PMC REST search](https://europepmc.org/RestfulWebService) |
+| **Filter** | `OPEN_ACCESS:Y` and `HAS_ABSTRACT:Y` per gene query |
+| **Licence** | Open-access full text only; **per-article licence is set by the publisher** (many are [CC BY](https://creativecommons.org/licenses/by/4.0/)). Verify on the article page before redistribution. |
+| **Manifest** | `data/documents/manifest/epmc_manifest.json` — PMIDs, titles, DOIs, gene queries |
+| **Download** | `py -3 scripts/download_europepmc.py --max-total 60` |
+| **Batch ingest** | `py -3 scripts/batch_ingest.py --prefix epmc-` |
+
+Europe PMC data is provided by the Europe PMC consortium. This demo stores abstract
+text locally for embedding/RAG; it does **not** mirror the full Open Targets or PubMed
+licence terms — check each record's licence field on Europe PMC.
 
 ## Source metadata format
 

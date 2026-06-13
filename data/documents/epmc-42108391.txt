@@ -1,0 +1,8 @@
+Title: Single-cell transcriptomic analysis reveals APOE genotype-dependent sex differences in Alzheimer's disease.
+Source: Europe PMC open access abstract
+PMID: 42108391
+DOI: 10.1002/alz.71463
+URL: https://europepmc.org/article/MED/42108391
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Introduction Alzheimer's disease (AD) is the most common form of dementia, with approximately two-thirds of AD patients being female. Basic and clinical research studies provide strong evidence that sex-specific differences contribute to AD complexity. Additionally, sex-specific interactions between apolipoprotein E (APOE) 𝜀4, the primary genetic risk factor of AD, and AD-associated neurodegenerative processes are well documented. However, there has been no comprehensive investigation into the interplay between sex and APOE genotypes at the single-cell level. Methods In this study, we systematically explore sex- and APOE-associated differences in single-cell transcriptomics in AD. Results Our work provides a high-resolution landscape of sex and APOE genotype-specific transcriptomic changes across 54 high-resolution cell types in AD and highlights genes and brain cell populations that show significant sex- and APOE-specific differences in AD. Discussion This study lays the groundwork for understanding the complex molecular mechanisms of AD and informs the development of targeted sex- and APOE-stratified interventions for AD.

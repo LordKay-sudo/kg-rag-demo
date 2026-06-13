@@ -1,0 +1,8 @@
+Title: Genome-Wide CRISPR/Cas9 Screening Identifies Modulators of THZ1 Response in Acute Myeloid Leukemia.
+Source: Europe PMC open access abstract
+PMID: 42193437
+DOI: 10.3390/biomedicines14051113
+URL: https://europepmc.org/article/MED/42193437
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Background/Objectives: Acute myeloid leukemia (AML) remains in need of more broadly effective therapeutic strategies. THZ1, a covalent CDK7 inhibitor, has shown anti-leukemic activity in AML, but the mechanism underlying its response remains incompletely defined. This study aimed to identify key modulators and related transcriptional programs involved in THZ1 response in AML. Methods: We combined a genome-wide CRISPR/Cas9 screen with functional validation and transcriptomic analyses. Results: TP53 was the top positively selected gene in the CRISPR screen in MOLM-13 cells. THZ1 induced p53 accumulation, and pharmacologic activation of the p53 pathway with idasanutlin further enhanced the early anti-leukemic response to THZ1 at 24 h. TP53 loss reduced the sensitivity of AML cells to THZ1-induced apoptosis, but did not abolish THZ1 responsiveness. Transcriptomic analyses showed that TP53 loss substantially reshaped the transcriptional state, whereas MYC and E2F target programs remained the most consistent pathways linked to THZ1 response. THZ1 also continued to suppress these programs in TP53 -knockout MOLM-13 cells and TP53 -mutant THP-1 cells. Conclusions: Overall, TP53 contributes to the anti-leukemic response to THZ1 but does not determine it, and THZ1 continues to suppress MYC and E2F target programs after TP53 loss.

@@ -1,0 +1,8 @@
+Title: Predictive capacity of paediatric nasal epithelial cells in sequential CFTR modulator therapy.
+Source: Europe PMC open access abstract
+PMID: 42134857
+DOI: 10.1136/thorax-2025-223153
+URL: https://europepmc.org/article/MED/42134857
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Background CFTR modulators have transformed cystic fibrosis (CF) treatment, but individual responses vary even among patients with identical CFTR genotypes. This underscores the need for predictive biomarkers to optimise therapeutic selection. Methods We evaluated 24 paediatric patients homozygous for F508del- CFTR , assessing lung function (FEV1pp) and sweat chloride (SC) before and after CFTR modulator therapy. Whole-gene sequencing was utilised to identify CFTR and pharmacogene variants. Patient-derived human nasal epithelial cells (HNECs) were expanded and differentiated at the air-liquid interface to assess CFTR function via ion transport (ΔIsc). Results Clinical responses varied widely. Twelve participants changed modulators during the study. Sequencing identified 231 additional CFTR variants and pharmacogene polymorphisms, but none correlated with response variability. However, a significant linear relationship emerged between ΔIsc and FEV1pp improvement in patients with baseline FEV1pp Conclusion Patient-derived differentiated HNEC cultures serve as a robust predictive tool for CFTR modulator response in paediatric CF patients. Their integration into clinical practice can enhance personalised treatment strategies, minimising ineffective therapy use and improving CF patient outcomes with precision medicine.

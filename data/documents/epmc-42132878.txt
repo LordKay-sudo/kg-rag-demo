@@ -1,0 +1,8 @@
+Title: Temperature and lipid composition differentially regulate KRAS assemblies on membranes.
+Source: Europe PMC open access abstract
+PMID: 42132878
+DOI: 10.1039/d6cc01853j
+URL: https://europepmc.org/article/MED/42132878
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+RAS GTPases oligomerize on membranes to regulate signaling, but factors governing this process remain unclear. Using variable-temperature native mass spectrometry and NanoBiT assays, we show KRAS dimerization is lipid- and temperature-dependent, increasing at higher temperatures, whereas NRAS is unaffected. These results indicate entropy-driven KRAS assembly and reveal isoform-specific mechanisms of membrane organization.

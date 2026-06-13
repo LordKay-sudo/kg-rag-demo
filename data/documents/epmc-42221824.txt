@@ -1,0 +1,8 @@
+Title: Boosting projection contrast method for co-aperture infrared optical engine design.
+Source: Europe PMC open access abstract
+PMID: 42221824
+DOI: 10.1016/j.isci.2026.116066
+URL: https://europepmc.org/article/MED/42221824
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+The diffraction characteristic of digital micromirror device (DMD) is the main factor to reduce the projection contrast, making it incompetent for DMD-based infrared scene projector (IRSP) to evaluate and test advanced infrared imaging systems in the hardware-in-the-loop (HWIL) simulation. In this paper, the diffraction analysis is applied for boosting the projection contrast of a dual-DMD based infrared optical engine. The diffraction directions of different orders are accurately calculated to maximize the DMD optical efficiency. Meanwhile, a two-element achromatic total internal reflection (ATIR) prism group is optimized to ensure the optimal illumination incident angle derived from the diffraction calculation. Furthermore, the diffracted beams of second maximums under off-state micromirrors are traced to demonstrate that irradiation distribution is close to the level without considering diffraction. Ultimately, these simulation results are validated by an experimental platform. The boosting contrast method can also be popularized to design other DMD-based optical instruments.

@@ -1,0 +1,8 @@
+Title: PTEN: Regulation, Signalling and Targeting in Cancer.
+Source: Europe PMC open access abstract
+PMID: 42122117
+DOI: 10.3390/cancers18091320
+URL: https://europepmc.org/article/MED/42122117
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+PTEN (phosphatase and tensin homolog deleted on chromosome ten)/MMAC1 (mutated in multiple advanced cancers) was discovered by two groups in 1997 as a novel tumor suppressor gene located at chromosome 10q23 [...].

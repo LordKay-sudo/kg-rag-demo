@@ -1,0 +1,8 @@
+Title: The role of inflammation in the immune evasion of KRas.
+Source: Europe PMC open access abstract
+PMID: 42183221
+DOI: 10.3389/fimmu.2026.1831303
+URL: https://europepmc.org/article/MED/42183221
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+KRas, NRas and HRas mutations are recognized in over 25% of all tumors, with the predominant mutations occurring at amino acids G12 or G13. While small molecule inhibitors of KRas show therapeutic promise, KRas has largely resisted control by immunotherapy in clinical cases, although immune responses may be detected following vaccination. Inflammation is a recognized precursor of most KRas-associated tumors. In inflammation cathepsin B leaks from the lysosome and at the higher pH of the cytoplasm acquires endopeptidase activity, in addition to its exopeptidase role. Cathepsin B is consistently upregulated in tumors and its role in tumorigenesis has been attributed to increased apoptosis and digestion of the extracellular matrix. Here we examine the effect of cathepsin B on neoepitopes in KRas. We predict that cathepsin B cleavage patterns of KRas may lead to the destruction of the G12 and G13 mutant neoepitope peptides that would otherwise bind to MHC I, thereby rendering them immunologically invisible. We review reports of the interaction of cathepsin B with trypsinogen in the pancreas and caspases in inflammasomes and the potential effect of premature activation of trypsin on immune evasion of G12R mutants. We summarize our observations and literature review in a schematic describing the potential role inflammation and the actions of cathepsin B, trypsin, and caspases on the immune evasion of KRas and related Ras family gene products.

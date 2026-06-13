@@ -1,0 +1,8 @@
+Title: BRAF V600E-mutated metastatic Wilms tumor with complete response to targeted RAF/MEK inhibition: a post-treatment follow-up case report.
+Source: Europe PMC open access abstract
+PMID: 42180049
+DOI: 10.3389/fonc.2026.1819524
+URL: https://europepmc.org/article/MED/42180049
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Wilms tumor (WT) is the most common pediatric renal malignancy. The standard treatment approach of surgical resection and cytotoxic chemotherapy has led to excellent outcomes for most patients, particularly those with favorable histology, with a 4-year overall survival of more than 90%. However, cases of multiply relapsed WT have dismal outcomes with limited effective options. Little is known about the role of precision-targeted therapy in recurrent Wilms tumor. We previously reported a pediatric patient with recurrent pulmonary metastatic favorable histology WT with a BRAF V600E mutation, who was successfully treated with BRAF/MEK inhibition. Here we provide an update on this patient's course, seven years from the identification of the second pulmonary metastatic relapse and initiation of genomically informed treatment. Following five years of treatment, the patient now remains disease-free for two years following discontinuation of targeted therapy, which was well tolerated without major adverse events. This report presents the first case of long-term survival after targeted therapy for multiply relapsed BRAF V600E WT.

@@ -1,0 +1,26 @@
+{
+  "resultList": {
+    "result": [
+      {
+        "pmid": "12345678",
+        "title": "BRCA1 mutations and breast cancer risk",
+        "abstractText": "BRCA1 pathogenic variants increase breast cancer susceptibility.",
+        "doi": "10.1000/example.1",
+        "isOpenAccess": "Y",
+        "source": "MED"
+      },
+      {
+        "pmid": "12345678",
+        "title": "Duplicate should skip",
+        "abstractText": "ignored",
+        "isOpenAccess": "Y"
+      },
+      {
+        "id": "noabstract",
+        "title": "No abstract",
+        "isOpenAccess": "Y"
+      }
+    ]
+  },
+  "nextCursorMark": "cursor-2"
+}

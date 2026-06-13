@@ -1,0 +1,8 @@
+Title: Duchenne muscular dystrophy coexisting with Down syndrome or Turner syndrome: Two case reports.
+Source: Europe PMC open access abstract
+PMID: 42220943
+DOI: 10.5409/wjcp.v15.i2.116726
+URL: https://europepmc.org/article/MED/42220943
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Background Dystrophinopathies are X-linked recessive neuromuscular disorders caused by pathogenic variants in the dystrophin gene ( DMD ). Down syndrome (DS) and Turner syndrome (TS) are well-characterized chromosomal conditions; however, their co-occurrence with monogenic disorders such as Duchenne muscular dystrophy (DMD) is rare and presents unique diagnostic and management challenges. Case summary We report two rare cases of DMD coexisting with chromosomal abnormalities, both followed at Siriraj Hospital. The first case involved a 6-year-old boy with DS who presented with incidentally detected elevated serum transaminase levels, calf pseudohypertrophy, and gait difficulty; gene panel testing identified a hemizygous c.3917dup (p.Asp1307Argfs*4) variant in DMD . The second case involved a 6-year-old girl with proximal muscle weakness and calf pseudohypertrophy; genetic studies revealed a heterozygous delins variant in the DMD (p.Ala3041Serfs*69), skewed X-chromosome inactivation, and mosaic TS [45,X(29%)/46,XX]. Conclusion The coexisting of DMD with DS or TS produces overlapping phenotypes that can complicate diagnosis; careful genetic evaluation and multidisciplinary management are therefore essential.

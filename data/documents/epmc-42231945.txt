@@ -1,0 +1,8 @@
+Title: Red blood cell deformability as a mechanobiological marker of CFTR dysfunction in cystic fibrosis.
+Source: Europe PMC open access abstract
+PMID: 42231945
+DOI: 10.1016/j.isci.2026.116067
+URL: https://europepmc.org/article/MED/42231945
+License: Open-access full text; licence varies by publisher (often CC BY). See manifest.
+
+Cystic fibrosis (CF) is a genetic disorder caused by mutations in the gene encoding the cystic fibrosis transmembrane conductance regulator (CFTR), a chloride channel that controls salt and fluid transport across membranes. While CFTR is mainly studied in epithelial tissues, it is also detectable in red blood cells (RBCs), with a reduced expression in individuals with CF. However, the impact of this reduction on RBC deformability remains unexplored. Here, we investigated RBC deformability in CF using osmotic gradient ektacytometry. We examined 70 subjects with CF or CFTR-related disorders and compared them with 46 healthy control subjects. Our findings identify significant and reproducible alterations in RBC deformability associated with CFTR dysfunction, partially restored in subjects receiving highly effective CFTR modulators. These results support RBC deformability as a functional phenotype of CFTR dysfunction with prognostic potential, encouraging further investigations into the role of RBC membrane channels in cellular mechanics.
