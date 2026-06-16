@@ -3,46 +3,22 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from app.ingest.schema import (
+    DISEASE_PHRASES,
+    DRUG_CONFIDENCE,
+    DRUG_DISEASE_RELATION_CONFIDENCE,
+    DRUG_NAMES,
+    GENE_ALLOWLIST,
+    GENE_CONFIDENCE,
+    GENE_DISEASE_RELATION_CONFIDENCE,
+    DISEASE_CONFIDENCE,
+)
 from app.rag.query_expand import expand_question
 
 # Bump when extraction rules change so provenance on MENTIONS edges is auditable (R7).
 EXTRACTOR_VERSION = "rule-v1"
 
-# Rule-based confidence per entity kind (allowlist matches are the most reliable).
-GENE_CONFIDENCE = 0.9
-DISEASE_CONFIDENCE = 0.85
-DRUG_CONFIDENCE = 0.8
-
 GENE_PATTERN = re.compile(r"\b([A-Z][A-Z0-9]{1,9})\b")
-
-DISEASE_PHRASES = {
-    "breast cancer": "breast_cancer",
-    "ovarian cancer": "ovarian_cancer",
-    "lung carcinoma": "lung_carcinoma",
-    "lung cancer": "lung_cancer",
-    "melanoma": "melanoma",
-    "cystic fibrosis": "cystic_fibrosis",
-    "alzheimer disease": "alzheimer_disease",
-    "duchenne muscular dystrophy": "duchenne_muscular_dystrophy",
-    "prostate cancer": "prostate_cancer",
-    "colorectal cancer": "colorectal_cancer",
-}
-
-DRUG_NAMES = {
-    "olaparib": "olaparib",
-    "erlotinib": "erlotinib",
-    "gefitinib": "gefitinib",
-    "vemurafenib": "vemurafenib",
-    "dabrafenib": "dabrafenib",
-    "trametinib": "trametinib",
-    "ivacaftor": "ivacaftor",
-    "tezacaftor": "tezacaftor",
-}
-
-GENE_ALLOWLIST = {
-    "BRCA1", "BRCA2", "TP53", "EGFR", "BRAF", "KRAS", "CFTR", "APOE", "APP",
-    "PSEN1", "DMD", "PTEN", "NRAS", "HRAS", "PIK3CA", "MYC", "RB1", "ESR1",
-}
 
 
 @dataclass
@@ -64,6 +40,7 @@ class ExtractedRelation:
 
 
 def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRelation]]:
+    """Schema-constrained extraction — see docs/EXTRACTION_SCHEMA.md."""
     text = expand_question(text)
     entities: list[ExtractedEntity] = []
     seen: set[tuple[str, str]] = set()
@@ -113,7 +90,7 @@ def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRe
                     target_type="Disease",
                     target_id=d.id,
                     relation="ASSOCIATED_WITH",
-                    confidence=0.7,
+                    confidence=GENE_DISEASE_RELATION_CONFIDENCE,
                 )
             )
     for drug in drugs:
@@ -125,7 +102,7 @@ def extract_entities(text: str) -> tuple[list[ExtractedEntity], list[ExtractedRe
                     target_type="Disease",
                     target_id=d.id,
                     relation="TREATS",
-                    confidence=0.6,
+                    confidence=DRUG_DISEASE_RELATION_CONFIDENCE,
                 )
             )
 

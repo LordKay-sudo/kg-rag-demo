@@ -110,7 +110,7 @@ docker compose run --rm seed
 flowchart LR
   subgraph ingest [Ingestion]
     DOC[data/documents]
-    EXT[chunk + extract]
+    EXT[chunk + extract + normalize]
     EMB[embed chunks]
   end
   subgraph store [Storage]
@@ -146,6 +146,16 @@ flowchart LR
 ```
 
 Chunk embeddings are stored for vector similarity search at query time.
+
+### Extraction schema and normalization (R16–R17)
+
+Text-derived entities follow a compact ontology \(S = (E, R, \Phi)\) documented in
+[`docs/EXTRACTION_SCHEMA.md`](docs/EXTRACTION_SCHEMA.md). The ingest pipeline is:
+
+1. **Extract** — rule-based allowlists in [`api/app/ingest/extractor.py`](api/app/ingest/extractor.py)
+2. **Normalize** — alias merge + dedupe in [`api/app/ingest/normalize.py`](api/app/ingest/normalize.py)
+3. **Resolve** — `ENSG` / EFO / MONDO via [`api/app/identifiers.py`](api/app/identifiers.py)
+4. **Write** — Neo4j nodes and `MENTIONS` edges in [`api/app/ingest/pipeline.py`](api/app/ingest/pipeline.py)
 
 ### Shared identifiers with BioInsight
 
@@ -285,6 +295,7 @@ node scripts/capture_screenshots.mjs
 | 8 | Chunk audit + disclaimer (R3/R4), extraction provenance (R7), BRCA1 notebook (R8) | ✅ |
 | 9 | Plan-aware RAG: `/ask/plan`, conditional widen (R10), synonyms (R11), compact mode (R12) | ✅ |
 | 10 | Europe PMC OA corpus download + batch ingest + retrieval benchmarks (R13–R15) | ✅ |
+| 11 | Extraction schema + post-extract normalization (R16–R17) | ✅ |
 
 ---
 

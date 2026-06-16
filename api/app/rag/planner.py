@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from app.identifiers import resolve_disease_id, resolve_gene_id
-from app.ingest.extractor import DRUG_NAMES, DISEASE_PHRASES
+from app.ingest.schema import DISEASE_PHRASES, DRUG_NAMES
 from app.rag.graph_bridge import graph_evidence_is_weak
 from app.rag.query_expand import expand_question, gene_symbols_in_text
 

@@ -9,6 +9,7 @@ from app.identifiers import resolve_entity_id
 from app.ingest.chunker import chunk_text
 from app.ingest.embedder import embed_texts
 from app.ingest.extractor import EXTRACTOR_VERSION, extract_entities
+from app.ingest.normalize import normalize_extraction
 from app.ingest.metadata import parse_document
 
 
@@ -51,6 +52,7 @@ def ingest_document(document_id: str) -> dict:
         for idx, (text, emb) in enumerate(zip(chunks, embeddings)):
             chunk_id = f"{document_id}-chunk-{idx}"
             entities, relations = extract_entities(text)
+            entities, relations = normalize_extraction(entities, relations)
 
             session.run(
                 """
