@@ -1,0 +1,9 @@
+Title: Phase 3 study of tarenflurbil (Flurizan) in mild Alzheimer disease (educational registry summary)
+Source: ClinicalTrials.gov registry summary
+NCT: NCT00105547
+URL: https://clinicaltrials.gov/study/NCT00105547
+Phase: PHASE3
+Status: COMPLETED
+Conditions: Alzheimer Disease, Mild Cognitive Impairment
+
+Educational GapForge corpus stub for NCT00105547 (tarenflurbil / Flurizan). This Phase 3 program evaluated cognitive and functional endpoints such as ADAS-Cog and ADCS-ADL over approximately 18 months in mild Alzheimer disease. Public reports indicate primary efficacy endpoints were not met and development of Flurizan for AD was discontinued. Use only for dual-channel gap hypothesis evidence assembly — not for clinical care. Prefer live ClinicalTrials.gov fetch via scripts/download_clinicaltrials.py when network is available.

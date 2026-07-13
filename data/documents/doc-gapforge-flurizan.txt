@@ -1,0 +1,7 @@
+Title: Translational framing — Flurizan (tarenflurbil) Alzheimer program discontinuation
+Source: GapForge curated educational abstract (not a real publication)
+PMID: 
+DOI: 
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC5350742/
+
+Synthetic educational abstract for BioInsight GapForge. Tarenflurbil (Flurizan, MPC-7869), an R-enantiomer NSAID derivative developed as a gamma-secretase modulator, advanced to Phase 3 in mild Alzheimer disease. The large Phase 3 study failed to show statistically significant benefit on co-primary cognitive and functional endpoints versus placebo, and the program was discontinued. Lessons discussed in the translational literature include limitations of clinical enrichment without mechanistic biomarkers, uncertainty about central target engagement at tolerated exposures, and the need for endpoint strategies matched to expected effect sizes. This document is for RAG demonstration and hypothesis generation with human review — not medical advice.
