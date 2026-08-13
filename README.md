@@ -3,11 +3,14 @@
 **Citation-grounded knowledge graph Q&A** — ingest biomedical-style documents, extract entities into Neo4j, retrieve with embeddings, answer via FastAPI + optional local LLM, explore with React.
 
 [![CI](https://github.com/LordKay-sudo/kg-rag-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/LordKay-sudo/kg-rag-demo/actions/workflows/ci.yml)
+[![Portfolio](https://img.shields.io/badge/portfolio-portfolio.lordkay.com-38bdf8)](https://portfolio.lordkay.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab)](api/requirements.txt)
-[![Neo4j 5](https://img.shields.io/badge/neo4j-5.x-008CC1)](docker-compose.yml)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688)](api/app/main.py)
-[![React 18](https://img.shields.io/badge/react-18-61dafb)](web/package.json)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab?logo=python&logoColor=white)](api/requirements.txt)
+[![Neo4j 5](https://img.shields.io/badge/neo4j-5.x-008CC1?logo=neo4j&logoColor=white)](docker-compose.yml)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](api/app/main.py)
+[![React 18](https://img.shields.io/badge/react-18-61dafb?logo=react&logoColor=black)](web/package.json)
+[![Docker](https://img.shields.io/badge/docker-compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
+[![RAG](https://img.shields.io/badge/RAG-citation--grounded-412991)](README.md)
 
 ---
 
